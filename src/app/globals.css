@@ -2,32 +2,43 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+.swal2-title {
+  color: #5d3f9a;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+.swal2-actions .swal2-cancel {
+  border: 1px solid #af88ff;
+  background-color: #fff;
+  color: #af88ff;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.swal2-actions .swal2-confirm {
+  background-color: #af88ff;
+  color: #fff;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.swal2-icon .swal2-success .swal2-icon-show {
+  color: #af88ff;
+}
+
+.custom-swal2-warning.swal2-warning {
+  border-color: #f5c725;
+  color: #f5c725;
+}
+
+div .swal2-icon .swal2-icon-content {
+  font-size: 4.5rem;
+}
+
+div .swal2-icon.swal2-success .swal2-success-ring {
+  border: 0.25em solid rgba(175, 136, 255, 0.3);
+}
+
+div .swal2-icon.swal2-success [class^="swal2-success-line"] {
+  background-color: #af88ff;
+}
+
+div .swal2-icon.swal2-success {
+  border-color: #af88ff;
+  color: #af88ff;
 }
