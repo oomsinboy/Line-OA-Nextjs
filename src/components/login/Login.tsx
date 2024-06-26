@@ -36,7 +36,7 @@ const LoginComponent = () => {
             console.log(response);
 
             if (response.status === 200) {
-                router.push('/home');
+                router.push(`${process.env.NEXT_PUBLIC_BASEROUTE}home`);
             } else {
                 setError({ password: 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง' });
             }

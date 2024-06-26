@@ -27,7 +27,7 @@ const Navbar = () => {
                     icon: 'success',
                     confirmButtonText: 'ปิด',
                 }).then(() => {
-                    window.location.href = '/login';
+                    window.location.href = `${process.env.NEXT_PUBLIC_BASEROUTE}`;
                 });
             }
         });
@@ -46,7 +46,7 @@ const Navbar = () => {
                     <div className='flex items-center text-xl text-[#9b88c0] font-medium select-none	'>
                         <h1>COLONOSCOPY TUH</h1>
                     </div>
-                    <Link href="/home" className='mx-10 text-[#461F78] flex items-center text-xl font-bold select-none'>
+                    <Link href={`${process.env.NEXT_PUBLIC_BASEROUTE}home`} className='mx-10 text-[#461F78] flex items-center text-xl font-bold select-none'>
                         <div>
                             <Image
                                 src={`/image/icon_home.png`}

@@ -1,7 +1,7 @@
 'use client'
 
 import axios from 'axios';
-import React, { useState, CSSProperties} from 'react';
+import React, { useState, CSSProperties } from 'react';
 import OtpInput from 'react-otp-input';
 import Swal from 'sweetalert2';
 import { useSearchParams } from 'next/navigation'
@@ -11,6 +11,7 @@ function OTPPageContent() {
     const [otp, setOtp] = useState<string>('');
     const searchParams = useSearchParams()
     const userId = searchParams.get('userId') || ""
+    const [response, setResponse] = useState<any>(null);
 
     const containerStyle: CSSProperties = {
         display: 'flex',
@@ -53,11 +54,17 @@ function OTPPageContent() {
                     'Content-Type': 'application/json'
                 }
             });
-            console.log('Data saved successfully:', response.data);
+            // console.log('Data saved successfully:', response.data);
+
 
             if (response.status === 200) {
+                setResponse(response.data);
+                const message = response.data.message;
+                const splitMessage = message.split(' ');
+                const greeting = splitMessage.shift();
+                const name = splitMessage.join(' ');
                 Swal.fire({
-                    title: 'สำเร็จ',
+                    title: `${greeting}<br>${name}`,
                     text: 'ระบบได้ทำการลงทะเบียน ข้อมูลของท่านเรียบร้อยแล้ว',
                     icon: 'success',
                     cancelButtonText: 'Close',
@@ -101,13 +108,42 @@ function OTPPageContent() {
             </div>
 
             <div className='pt-[25dvh] flex justify-center items-center text-center'>
-                <div>
+                {response ? (
+                    <div>
+                        {response && (
+                            <div>
+                                <div className='text-3xl text-[#5d3f9a]'>ลงทะเบียนสำเร็จ</div>
+                                <div className='text-2xl text-[#5d3f9a]'>{response.message}</div>
+                            </div>
+                        )}
+                    </div>
+                ) : (
+                    <div>
+                        <span className='text-2xl'>Please Fill in OTP</span>
+                        <div>
+                            <OtpInput
+                                value={otp}
+                                onChange={setOtp}
+                                numInputs={6}
+                                inputType='tel'
+                                containerStyle={containerStyle}
+                                inputStyle={inputStyle}
+                                renderInput={(props) => <input {...props} />}
+                            />
+                        </div>
+                        <div className="flex justify-center w-full my-10">
+                            <button onClick={verifyOTP} className="text-white w-32 h-10 text-xl font-light bg-[#AF88FF] btn btn-active">Submit</button>
+                        </div>
+                    </div>
+                )}
+                {/* <div>
                     <span className='text-2xl'>Please Fill in OTP</span>
                     <div>
                         <OtpInput
                             value={otp}
                             onChange={setOtp}
                             numInputs={6}
+                            inputType='tel'
                             containerStyle={containerStyle}
                             inputStyle={inputStyle}
                             renderInput={(props) => <input {...props} />}
@@ -116,7 +152,7 @@ function OTPPageContent() {
                     <div className="flex justify-center w-full my-10">
                         <button onClick={verifyOTP} className="text-white w-32 h-10 text-xl font-light bg-[#AF88FF] btn btn-active">Submit</button>
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
     )

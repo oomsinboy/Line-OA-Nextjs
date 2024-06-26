@@ -16,9 +16,14 @@ const PatientBody = ({ items }: PatientProps) => {
     }, [items]);
 
     // Filtered items based on search term
-    const filteredItems = currentItems.filter(item =>
-        item.patient_name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    // const filteredItems = currentItems.filter(item =>
+    //     item.patient_name.toLowerCase().includes(searchTerm.toLowerCase())
+    // );
+
+    const filteredItems = currentItems
+    .filter(item => item.patient_name.toLowerCase().includes(searchTerm.toLowerCase()))
+    .reverse();
+
 
     // Pagination calculations
     const indexOfLastItem = currentPage * itemsPerPage;
@@ -119,7 +124,7 @@ const PatientBody = ({ items }: PatientProps) => {
                                     0
                                 </div>
                             </button>
-                            <Link href="/home/patient/new_patient" className="relative text-white w-40 font-light bg-[#AF88FF] btn btn-active">
+                            <Link href={`${process.env.NEXT_PUBLIC_BASEROUTE}home/patient/new-patient`} className="relative text-white w-40 font-light bg-[#AF88FF] btn btn-active">
                                 <Image
                                     className='absolute left-4'
                                     src={`/image/icon_plus.png`}
@@ -150,14 +155,14 @@ const PatientBody = ({ items }: PatientProps) => {
                                             <td>{item.patient_name}</td>
                                             <td>{item.state}</td>
                                             <td className=' justify-center flex'>
-                                                <button>
+                                                <Link href={`/home/patient/view-patient?id=${item.visit_id}&state=${item.state}`}>
                                                     <Image
                                                         src={`/image/icon_view.png`}
                                                         alt="logo"
                                                         width={30}
                                                         height={30}
                                                     />
-                                                </button>
+                                                </Link>
                                             </td>
                                         </tr>
                                     ))}

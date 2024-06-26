@@ -13,9 +13,16 @@ export interface PatientProps {
   items: PatientData[];
 }
 
+// Patient New
 export interface MedicalList {
   id: number;
-  name : string;
+  name: string;
+}
+
+// Patient View
+export interface PatientState {
+  id: number;
+  state: string;
 }
 
 // Information
