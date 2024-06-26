@@ -20,9 +20,41 @@ export interface MedicalList {
 }
 
 // Patient View
-export interface PatientState {
-  id: number;
-  state: string;
+export interface PatientViewID {
+  visit_id: number;
+  patient_fname: string;
+  patient_lname: string;
+  line_name: string | null;
+  line_id: string | null;
+  id_card: string;
+  dob: string;
+  register_date: string;
+  appointment_date: string;
+  appointment_time: string;
+  med: {
+      val: string;
+      medic: string;
+  }[];
+  total_med: number;
+  otp: string;
+}
+
+export interface DailyDetail {
+  daily_id?: number;
+  ptname: string;
+  date_before_appointment: string;
+  noti_id?: number;
+  noti_detail: string;
+  noti_image?: string[];
+}
+
+export interface CallViewID {
+  patient: PatientViewID;
+  daily_detail: DailyDetail[];
+}
+
+export interface PatientStateOTP {
+  items: CallViewID;
 }
 
 // Information
