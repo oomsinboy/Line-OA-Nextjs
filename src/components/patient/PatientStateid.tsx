@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect, useState } from 'react'
-import { PatientStateOTP } from '../type'
+import { CallViewID, PatientStateOTP } from '../type'
 import { formatDate } from '../help';
 
 interface Datatest {
@@ -10,9 +10,7 @@ interface Datatest {
 
 
 const PatientstateID = ({ items }: PatientStateOTP) => {
-    // const [currentItems, setCurrentItems] = useState<NotiData[]>(items);
-
-    const [currentItems, setCurrentItems] = useState(items);
+    const [currentItems, setCurrentItems] = useState<CallViewID>(items);
 
     useEffect(() => {
         setCurrentItems(items);
