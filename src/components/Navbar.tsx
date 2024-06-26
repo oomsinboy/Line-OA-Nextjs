@@ -38,7 +38,7 @@ const Navbar = () => {
             <div className=' rounded-[15px] bg-white px-2 py-1 flex justify-between'>
                 <div className='flex'>
                     <Image
-                        src={`/logo_colonoscopy_small.png`}
+                        src={`/image/logo_colonoscopy_small.png`}
                         alt="logo"
                         width={80}
                         height={80}
@@ -49,7 +49,7 @@ const Navbar = () => {
                     <Link href="/home" className='mx-10 text-[#461F78] flex items-center text-xl font-bold select-none'>
                         <div>
                             <Image
-                                src={`/icon_home.png`}
+                                src={`/image/icon_home.png`}
                                 alt="logo"
                                 width={30}
                                 height={30}
@@ -62,7 +62,7 @@ const Navbar = () => {
                     <div onClick={handleLogout} className='cursor-pointer mx-16 text-[#461F78] flex items-center text-xl font-bold select-none'>
                         <div>
                             <Image
-                                src={`/icon_out.png`}
+                                src={`/image/icon_out.png`}
                                 alt="logo"
                                 width={30}
                                 height={30}

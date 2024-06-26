@@ -17,10 +17,15 @@ const DataResponse = ({ response }: any) => {
             dob,
             register_time,
             appointment_date,
+            appointment_time,
             otp,
             med,
         },
     } = response;
+
+    const date = appointment_date.split('T')[0]; // จะได้ "2024-07-11"
+
+    const datetimeLocal = `${date}T${appointment_time}`; // จะได้ "2024-07-11T15:00"
 
     return (
         <div className='min-h-screen'>
@@ -39,7 +44,7 @@ const DataResponse = ({ response }: any) => {
                                         <label className="input input-bordered flex items-center gap-2 w-full">
                                             <input
                                                 type="text"
-                                                className="grow"
+                                                className="grow text-[#705396]"
                                                 value={fname}
                                                 readOnly
                                             />
@@ -52,7 +57,7 @@ const DataResponse = ({ response }: any) => {
                                         <label className="input input-bordered flex items-center gap-2 w-full">
                                             <input
                                                 type="text"
-                                                className="grow"
+                                                className="grow text-[#705396]"
                                                 value={lname}
                                                 readOnly
                                             />
@@ -67,7 +72,7 @@ const DataResponse = ({ response }: any) => {
                                         <label className="input input-bordered flex items-center gap-2 w-full">
                                             <input
                                                 type="text"
-                                                className="grow"
+                                                className="grow text-[#705396]"
                                                 value={idcard}
                                                 maxLength={13}
                                                 pattern="\d{13}"
@@ -82,7 +87,7 @@ const DataResponse = ({ response }: any) => {
                                         <label className="input input-bordered flex items-center gap-2 w-full">
                                             <input
                                                 type="date"
-                                                className="grow"
+                                                className="grow text-[#705396]"
                                                 value={dob}
                                                 readOnly
                                             />
@@ -97,7 +102,7 @@ const DataResponse = ({ response }: any) => {
                                         <label className=" bg-[#F8F5FB] input input-bordered flex items-center gap-2 w-full">
                                             <input
                                                 type="text"
-                                                className="grow pointer-events-none"
+                                                className="grow pointer-events-none text-[#705396]"
                                                 value={register_time}
                                                 readOnly
                                             />
@@ -110,8 +115,8 @@ const DataResponse = ({ response }: any) => {
                                         <label className="input input-bordered flex items-center gap-2 w-full">
                                             <input
                                                 type="datetime-local"
-                                                className="grow"
-                                                value={appointment_date}
+                                                className="grow text-[#705396]"
+                                                value={datetimeLocal}
                                                 readOnly
                                             />
                                         </label>
@@ -298,7 +303,7 @@ function NewPatient() {
 
         try {
             const response = await axios.post(`${process.env.NEXT_PUBLIC_CALLAPI}patient`, formdata);
-            console.log('Data saved successfully:', response.data);
+            // console.log('Data saved successfully:', response.data);
 
             if (response.status === 200) {
                 setResponse(response.data);
@@ -355,7 +360,7 @@ function NewPatient() {
                                         <label className="input input-bordered flex items-center gap-2 w-full">
                                             <input
                                                 type="text"
-                                                className="grow"
+                                                className="grow text-[#705396]"
                                                 value={firstname}
                                                 onChange={(e) => setFirstname(e.target.value)}
                                             />
@@ -369,7 +374,7 @@ function NewPatient() {
                                         <label className="input input-bordered flex items-center gap-2 w-full">
                                             <input
                                                 type="text"
-                                                className="grow"
+                                                className="grow text-[#705396]"
                                                 value={lastname}
                                                 onChange={(e) => setLastname(e.target.value)}
                                             />
@@ -386,7 +391,7 @@ function NewPatient() {
                                         <label className="input input-bordered flex items-center gap-2 w-full">
                                             <input
                                                 type="text"
-                                                className="grow"
+                                                className="grow text-[#705396]"
                                                 value={idCard}
                                                 onChange={handleIdCardChange}
                                                 maxLength={13}
@@ -403,7 +408,7 @@ function NewPatient() {
                                         <label className="input input-bordered flex items-center gap-2 w-full">
                                             <input
                                                 type="date"
-                                                className="grow"
+                                                className="grow text-[#705396]"
                                                 value={birthDate}
                                                 onChange={(e) => setBirthDate(e.target.value)}
                                             />
@@ -419,7 +424,7 @@ function NewPatient() {
                                         <label className=" bg-[#F8F5FB] input input-bordered flex items-center gap-2 w-full">
                                             <input
                                                 type="text"
-                                                className="grow pointer-events-none"
+                                                className="grow pointer-events-none text-[#705396] text-center"
                                                 value={currentDate}
                                                 readOnly
                                             />
@@ -432,7 +437,7 @@ function NewPatient() {
                                         <label className="input input-bordered flex items-center gap-2 w-full">
                                             <input
                                                 type="datetime-local"
-                                                className="grow"
+                                                className="grow text-[#705396]"
                                                 value={appointmentDate}
                                                 onChange={(e) => setAppointmentDate(e.target.value)}
                                             />
@@ -448,7 +453,7 @@ function NewPatient() {
                                     <span className='text-[#705396]'>เลือกยาที่ควรหยุดรับประทาน</span>
                                     <button className='mx-2' onClick={addMedication}>
                                         <Image
-                                            src={`/icon_addplus.png`}
+                                            src={`/image/icon_addplus.png`}
                                             alt="logo"
                                             width={30}
                                             height={30}
@@ -484,7 +489,7 @@ function NewPatient() {
                                                 {medications.length > 1 && (
                                                     <button className='mx-1' onClick={() => removeMedication(medication.id)}>
                                                         <Image
-                                                            src={`/icon_delete.png`}
+                                                            src={`/image/icon_delete.png`}
                                                             alt="delete medication"
                                                             width={30}
                                                             height={30}
@@ -503,17 +508,6 @@ function NewPatient() {
                                     </button>
                                 </div>
                             </div>
-
-                            {/* <div className="w-1/2 pl-4 flex justify-center items-center">
-                                <div className='text-center w-1/2'>
-                                    <div className='text-[#461F78] text-3xl font-semibold my-2'>OTP</div>
-                                    <div className='text-[#705396] my-2'>รหัสนี้ใช้สำหรับลงทะเบียนผู้ใช้งาน Line OA</div>
-                                    <div className='p-10 bg-[#F8F5FB] my-2'>
-                                        <span className='text-[#7F57D0] text-4xl tracking-widest'>123456</span>
-                                    </div>
-                                </div>
-                            </div> */}
-
                         </div>
                     </div>
                 </div>

@@ -14,7 +14,7 @@ const ItemCard = ({ item, onDelete }: ItemCardProps) => {
                         <div className='flex'>
                             <button className='mx-1'>
                                 <Image
-                                    src={`/icon_view.png`}
+                                    src={`/image/icon_view.png`}
                                     alt="logo"
                                     width={30}
                                     height={30}
@@ -22,7 +22,7 @@ const ItemCard = ({ item, onDelete }: ItemCardProps) => {
                             </button>
                             <button  onClick={() => onDelete(item.id)}>
                                 <Image
-                                    src={`/icon_trash.png`}
+                                    src={`/image/icon_trash.png`}
                                     alt="logo"
                                     width={30}
                                     height={30}

@@ -9,7 +9,7 @@ const PatientBody = ({ items }: PatientProps) => {
     const [currentItems, setCurrentItems] = useState<PatientData[]>(items);
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const [itemsPerPage] = useState<number>(10);
+    const [itemsPerPage] = useState<number>(12);
 
     useEffect(() => {
         setCurrentItems(items);
@@ -122,7 +122,7 @@ const PatientBody = ({ items }: PatientProps) => {
                             <Link href="/home/patient/new_patient" className="relative text-white w-40 font-light bg-[#AF88FF] btn btn-active">
                                 <Image
                                     className='absolute left-4'
-                                    src={`/icon_plus.png`}
+                                    src={`/image/icon_plus.png`}
                                     alt="logo"
                                     width={20}
                                     height={20}
@@ -152,7 +152,7 @@ const PatientBody = ({ items }: PatientProps) => {
                                             <td className=' justify-center flex'>
                                                 <button>
                                                     <Image
-                                                        src={`/icon_view.png`}
+                                                        src={`/image/icon_view.png`}
                                                         alt="logo"
                                                         width={30}
                                                         height={30}

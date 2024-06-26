@@ -45,3 +45,11 @@ export type ItemCardProps = {
   item: InfoData;
   onDelete: (id: number) => void;
 };
+
+//  Modal
+export interface ModalProps {
+  isVisible: boolean;
+  onClose: () => void;
+  title: string;
+  children: React.ReactNode;
+}

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Kanit } from "next/font/google";
 import "./globals.css";
 
+
 const inter = Inter({ subsets: ["latin"] });
 const kanit = Kanit({ subsets: ["latin"], weight: ["300", "400"] });
 
@@ -16,6 +17,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en">
       <body className={`bg-[#705396] ${inter.className} ${kanit.className}`}>{children}</body>

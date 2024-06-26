@@ -1,12 +1,7 @@
 import React from 'react'
 import Image from 'next/image';
+import { ModalProps } from '../type';
 
-interface ModalProps {
-  isVisible: boolean;
-  onClose: () => void;
-  title: string;
-  children: React.ReactNode;
-}
 
 const Modal = ({ isVisible, onClose, title, children }: ModalProps) => {
   if (!isVisible) return null;
@@ -19,7 +14,7 @@ const Modal = ({ isVisible, onClose, title, children }: ModalProps) => {
             <span className='text-2xl text-[#5955B3] font-semibold	'>{title}</span>
             <button onClick={() => onClose()}>
               <Image
-                src={`/icon_close.png`}
+                src={`/image/icon_close.png`}
                 alt="logo"
                 width={30}
                 height={30}

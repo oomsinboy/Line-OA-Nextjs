@@ -16,7 +16,7 @@ const HomeBody = () => {
                                 <div className="card-body flex items-center justify-center">
                                     <div className='my-14'>
                                         <Image
-                                            src={`/icon_patient.png`}
+                                            src={`/image/icon_patient.png`}
                                             alt="logo"
                                             width={200}
                                             height={200}
@@ -29,7 +29,7 @@ const HomeBody = () => {
                                 <div className="card-body flex items-center justify-center">
                                     <div className='my-14'>
                                         <Image
-                                            src={`/icon_notifications.png`}
+                                            src={`/image/icon_notifications.png`}
                                             alt="logo"
                                             width={200}
                                             height={200}
@@ -42,7 +42,7 @@ const HomeBody = () => {
                                 <div className="card-body flex items-center justify-center">
                                     <div className='my-14'>
                                         <Image
-                                            src={`/icon_informations.png`}
+                                            src={`/image/icon_informations.png`}
                                             alt="logo"
                                             width={200}
                                             height={200}

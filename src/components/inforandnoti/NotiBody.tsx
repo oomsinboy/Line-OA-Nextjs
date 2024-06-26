@@ -59,7 +59,7 @@ const NotiBody = ({ items } : InfoBodyProps) => {
                             <button onClick={openModal} className="relative text-white w-40 font-light bg-[#AF88FF] btn btn-active">
                                 <Image
                                     className='absolute left-4'
-                                    src={`/icon_plus.png`}
+                                    src={`/image/icon_plus.png`}
                                     alt="logo"
                                     width={20}
                                     height={20}
