@@ -7,186 +7,7 @@ import { formatCurrentDate } from '../../../../components/help'
 import axios from 'axios';
 import { MedicalList } from '@/components/type';
 import Swal from 'sweetalert2';
-
-const DataResponse = ({ response }: any) => {
-    const {
-        patient: {
-            fname,
-            lname,
-            idcard,
-            dob,
-            register_time,
-            appointment_date,
-            appointment_time,
-            otp,
-            med,
-        },
-    } = response;
-
-    const date = appointment_date.split('T')[0]; // จะได้ "2024-07-11"
-
-    const datetimeLocal = `${date}T${appointment_time}`; // จะได้ "2024-07-11T15:00"
-
-    return (
-        <div className='min-h-screen'>
-            <Navbar />
-            <div className='px-8'>
-                <div className='h-full w-full rounded-[15px] bg-white p-5 flex justify-center'>
-                    <div className='min-h-[81.71dvh] w-[70%] flex flex-col'>
-                        <div>
-                            <div className='text-2xl text-[#5955B3] font-semibold'>เพิ่มผู้ป่วยใหม่</div>
-                        </div>
-                        <form action="" className=" mt-2">
-                            <div className='flex justify-between'>
-                                <div className="w-1/2 pr-4">
-                                    <div className='my-2'>
-                                        <span className='text-[#705396]'>ชื่อ</span>
-                                        <label className="input input-bordered flex items-center gap-2 w-full">
-                                            <input
-                                                type="text"
-                                                className="grow text-[#705396]"
-                                                value={fname}
-                                                readOnly
-                                            />
-                                        </label>
-                                    </div>
-                                </div>
-                                <div className="w-1/2 pl-4">
-                                    <div className='my-2'>
-                                        <span className='text-[#705396]'>นามสกุล</span>
-                                        <label className="input input-bordered flex items-center gap-2 w-full">
-                                            <input
-                                                type="text"
-                                                className="grow text-[#705396]"
-                                                value={lname}
-                                                readOnly
-                                            />
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='flex justify-between'>
-                                <div className="w-1/2 pr-4">
-                                    <div className='my-2'>
-                                        <span className='text-[#705396]'>เลขที่บัตรประจำตัวประชาชน</span>
-                                        <label className="input input-bordered flex items-center gap-2 w-full">
-                                            <input
-                                                type="text"
-                                                className="grow text-[#705396]"
-                                                value={idcard}
-                                                maxLength={13}
-                                                pattern="\d{13}"
-                                                readOnly
-                                            />
-                                        </label>
-                                    </div>
-                                </div>
-                                <div className="w-1/2 pl-4">
-                                    <div className='my-2'>
-                                        <span className='text-[#705396]'>วันเดือนปีเกิด</span>
-                                        <label className="input input-bordered flex items-center gap-2 w-full">
-                                            <input
-                                                type="date"
-                                                className="grow text-[#705396]"
-                                                value={dob}
-                                                readOnly
-                                            />
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='flex justify-between'>
-                                <div className="w-1/2 pr-4">
-                                    <div className='my-2'>
-                                        <span className='text-[#705396]'>วันที่ลงทะเบียน</span>
-                                        <label className=" bg-[#F8F5FB] input input-bordered flex items-center gap-2 w-full">
-                                            <input
-                                                type="text"
-                                                className="grow pointer-events-none text-[#705396]"
-                                                value={register_time}
-                                                readOnly
-                                            />
-                                        </label>
-                                    </div>
-                                </div>
-                                <div className="w-1/2 pl-4">
-                                    <div className='my-2'>
-                                        <span className='text-[#705396]'>วันนัดหมาย</span>
-                                        <label className="input input-bordered flex items-center gap-2 w-full">
-                                            <input
-                                                type="datetime-local"
-                                                className="grow text-[#705396]"
-                                                value={datetimeLocal}
-                                                readOnly
-                                            />
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                        <div className='flex justify-between'>
-                            <div className='my-2 w-1/2 pr-4'>
-                                <div className='flex'>
-                                    <span className='text-[#705396]'>เลือกยาที่ควรหยุดรับประทาน</span>
-                                </div>
-                                <div className='rounded bg-[#E8DBF5] min-h-[49dvh] p-3'>
-                                    <span className='text-[#705396]'> รายการที่เลือก {med.length} รายการ</span>
-                                    <div className='max-h-[45dvh] overflow-y-auto'>
-                                        {/* {med.map((medication: any, index: number) => (
-                                        <div key={index} className='flex justify-between pt-2'>
-                                            <select
-                                                className='w-[70%] mx-1 h-[3rem] rounded bg-[#F8F5FB] text-center text-[#705396]'
-                                                value={medication.medic}
-                                            >
-                                                <option value={medication.medic}>{medication.medic}</option>
-                                            </select>
-                                            <select
-                                                className='w-[20%] mx-1 h-[3rem] rounded text-center text-[#705396]'
-                                                value={medication.val}
-                                            >
-                                                <option value={medication.val}>{medication.val} วัน</option>
-                                            </select>
-                                        </div>
-                                    ))} */}
-                                        {med.map((medication: any, index: number) => (
-                                            <div key={index} className='flex justify-between pt-2'>
-                                                <select
-                                                    className='w-[70%] mx-1 h-[3rem] rounded bg-[#F8F5FB] text-center text-[#705396]'
-                                                    defaultValue={medication.medic}
-                                                    disabled
-                                                >
-                                                    <option value={medication.medic}>{medication.medic}</option>
-                                                </select>
-                                                <select
-                                                    className='w-[20%] mx-1 h-[3rem] rounded text-center text-[#705396]'
-                                                    defaultValue={medication.val}
-                                                    disabled
-                                                >
-                                                    <option value={medication.val}>{medication.val} วัน</option>
-                                                </select>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="w-1/2 pl-4 flex justify-center items-center">
-                                <div className='text-center w-1/2'>
-                                    <div className='text-[#461F78] text-3xl font-semibold my-2'>OTP</div>
-                                    <div className='text-[#705396] my-2'>รหัสนี้ใช้สำหรับลงทะเบียนผู้ใช้งาน Line OA</div>
-                                    <div className='p-10 bg-[#F8F5FB] my-2'>
-                                        <span className='text-[#7F57D0] text-4xl tracking-widest'>{otp}</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-}
+import AftersaveData from '@/components/patient/DataRes';
 
 
 function NewPatient() {
@@ -196,7 +17,8 @@ function NewPatient() {
     const [birthDate, setBirthDate] = useState<string>('');
     const [currentDate, setCurrentDate] = useState<string>('');
     const [appointmentDate, setAppointmentDate] = useState<string>('');
-    const [medications, setMedications] = useState([{ id: Date.now(), name: '', dose: '' }]);
+    // const [medications, setMedications] = useState([{ id: Date.now(), name: '', dose: '' }]);
+    const [medications, setMedications] = useState<{ id: number; name: string; dose: string }[]>([]);
     const [medicalList, setMedicalList] = useState<MedicalList[]>([]);
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
     const [errorMed, setErrorMed] = useState<string>('');
@@ -204,7 +26,6 @@ function NewPatient() {
 
 
     useEffect(() => {
-        setCurrentDate(formatCurrentDate());
 
         const fetchMedicalo = () => {
             const apicall = process.env.NEXT_PUBLIC_CALLAPI as string;
@@ -216,8 +37,13 @@ function NewPatient() {
                     console.error('Error fetching data:', error);
                 });
         }
-
         fetchMedicalo()
+
+        const intervalId = setInterval(() => {
+            setCurrentDate(formatCurrentDate());
+        }, 1000);
+
+        return () => clearInterval(intervalId);
     }, []);
 
     const handleIdCardChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -257,11 +83,20 @@ function NewPatient() {
 
     const handleSave = async () => {
 
+        const invalidMed = medications.some(medication => !medication.name || !medication.dose);
+
+        if (invalidMed) {
+            setErrorMed('กรุณากรอกข้อมูลยาและจำนวนวันที่รับประทานให้ครบถ้วน');
+            return;
+        } else {
+            setErrorMed('');
+        }
+
         const medData = medications
-            .filter(medication => medication.dose.trim() !== '' && medication.name.trim() !== '')
+            // .filter(medication => medication.dose && medication.name)
             .map(medication => ({
-                val: medication.dose.trim(),
-                medic: medication.name.trim(),
+                val: medication.dose,
+                medic: medication.name,
             }));
 
         const newErrors: { [key: string]: string } = {};
@@ -275,11 +110,6 @@ function NewPatient() {
         }
         if (!birthDate.trim()) newErrors.birthDate = 'กรุณากรอกวันเดือนปีเกิด';
         if (!appointmentDate.trim()) newErrors.appointmentDate = 'กรุณากรอกวันนัดหมาย';
-        if (medData.length === 0) {
-            setErrorMed('กรุณาเลือกรายการ');
-        } else {
-            setErrorMed('');
-        }
 
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
@@ -299,7 +129,6 @@ function NewPatient() {
         formdata.append('appointment_date', appointmentDate.split('T')[0]);
         formdata.append('appointment_time', appointmentDate.split('T')[1]);
         formdata.append('med', ConvertMed);
-
 
         try {
             const response = await axios.post(`${process.env.NEXT_PUBLIC_CALLAPI}patient`, formdata);
@@ -340,7 +169,7 @@ function NewPatient() {
     };
 
     if (response) {
-        return <DataResponse response={response} />;
+        return <AftersaveData response={response} />;
     }
 
     return (
@@ -461,7 +290,7 @@ function NewPatient() {
                                     </button>
                                 </div>
                                 {errorMed && <span className='text-red-500'>{errorMed}</span>}
-                                <div className='rounded bg-[#E8DBF5] min-h-[49dvh] p-3'>
+                                <div className='rounded bg-[#E8DBF5] min-h-[40dvh] p-3'>
                                     <span className='text-[#705396]'> รายการที่เลือก {medications.length} รายการ</span>
                                     <div className='max-h-[45dvh] overflow-y-auto'>
                                         {medications.map((medication) => (
@@ -486,16 +315,14 @@ function NewPatient() {
                                                         <option key={i + 1} value={i + 1}>{i + 1} วัน</option>
                                                     ))}
                                                 </select>
-                                                {medications.length > 1 && (
-                                                    <button className='mx-1' onClick={() => removeMedication(medication.id)}>
-                                                        <Image
-                                                            src={`/image/icon_delete.png`}
-                                                            alt="delete medication"
-                                                            width={30}
-                                                            height={30}
-                                                        />
-                                                    </button>
-                                                )}
+                                                <button className='mx-1' onClick={() => removeMedication(medication.id)}>
+                                                    <Image
+                                                        src={`/image/icon_delete.png`}
+                                                        alt="delete medication"
+                                                        width={30}
+                                                        height={30}
+                                                    />
+                                                </button>
                                             </div>
                                         ))}
                                     </div>

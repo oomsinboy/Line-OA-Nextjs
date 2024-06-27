@@ -54,8 +54,6 @@ function OTPPageContent() {
                     'Content-Type': 'application/json'
                 }
             });
-            // console.log('Data saved successfully:', response.data);
-
 
             if (response.status === 200) {
                 setResponse(response.data);

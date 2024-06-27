@@ -1,18 +1,4 @@
-"use client"
-
-import React, { useEffect, useState } from 'react'
-import { PatientStateOTP } from '../type'
-import { formatDate } from '../help';
-
-
-
-const PatientstateID = ({ items }: PatientStateOTP) => {
-
-    const date = items.patient.appointment_date.split('T')[0]; // จะได้ "2024-07-11"
-
-    const datetimeLocal = `${date}T${items.patient.appointment_time}`;
-
-
+const PreloadData = () => {
     return (
         <div className='px-8'>
             <div className='h-full w-full rounded-[15px] bg-white p-5 flex justify-center'>
@@ -29,7 +15,6 @@ const PatientstateID = ({ items }: PatientStateOTP) => {
                                         <input
                                             type="text"
                                             className="grow text-[#705396]"
-                                            value={items.patient.patient_fname}
                                             readOnly
                                         />
                                     </label>
@@ -42,7 +27,6 @@ const PatientstateID = ({ items }: PatientStateOTP) => {
                                         <input
                                             type="text"
                                             className="grow text-[#705396]"
-                                            value={items.patient.patient_lname}
                                             readOnly
                                         />
                                     </label>
@@ -57,7 +41,6 @@ const PatientstateID = ({ items }: PatientStateOTP) => {
                                         <input
                                             type="text"
                                             className="grow text-[#705396]"
-                                            value={items.patient.id_card}
                                             maxLength={13}
                                             pattern="\d{13}"
                                             readOnly
@@ -72,7 +55,6 @@ const PatientstateID = ({ items }: PatientStateOTP) => {
                                         <input
                                             type="date"
                                             className="grow text-[#705396]"
-                                            value={items.patient.dob}
                                             readOnly
                                         />
                                     </label>
@@ -87,7 +69,6 @@ const PatientstateID = ({ items }: PatientStateOTP) => {
                                         <input
                                             type="text"
                                             className="grow pointer-events-none text-[#705396]"
-                                            value={formatDate(items.patient.register_date)}
                                             readOnly
                                         />
                                     </label>
@@ -100,7 +81,6 @@ const PatientstateID = ({ items }: PatientStateOTP) => {
                                         <input
                                             type="datetime-local"
                                             className="grow text-[#705396]"
-                                            value={datetimeLocal}
                                             readOnly
                                         />
                                     </label>
@@ -114,27 +94,27 @@ const PatientstateID = ({ items }: PatientStateOTP) => {
                                 <span className='text-[#705396]'>เลือกยาที่ควรหยุดรับประทาน</span>
                             </div>
                             <div className='rounded bg-[#E8DBF5] min-h-[49dvh] p-3'>
-                                <span className='text-[#705396]'> รายการที่เลือก {items.patient.med.length} รายการ</span>
-                                <div className='max-h-[45dvh] overflow-y-auto'>
-                                    {items.patient.med.map((medication: any, index: number) => (
-                                        <div key={index} className='flex justify-between pt-2'>
-                                            <select
-                                                className='w-[70%] mx-1 h-[3rem] rounded bg-[#F8F5FB] text-center text-[#705396]'
-                                                defaultValue={medication.medic}
-                                                disabled
-                                            >
-                                                <option value={medication.medic}>{medication.medic}</option>
-                                            </select>
-                                            <select
-                                                className='w-[20%] mx-1 h-[3rem] rounded text-center text-[#705396]'
-                                                defaultValue={medication.val}
-                                                disabled
-                                            >
-                                                <option value={medication.val}>{medication.val} วัน</option>
-                                            </select>
-                                        </div>
-                                    ))}
-                                </div>
+                                <span className='text-[#705396]'> รายการที่เลือก 0 รายการ</span>
+                                {/* <div className='max-h-[45dvh] overflow-y-auto'>
+                                      {items.patient.med.map((medication: any, index: number) => (
+                                          <div key={index} className='flex justify-between pt-2'>
+                                              <select
+                                                  className='w-[70%] mx-1 h-[3rem] rounded bg-[#F8F5FB] text-center text-[#705396]'
+                                                  defaultValue={medication.medic}
+                                                  disabled
+                                              >
+                                                  <option value={medication.medic}>{medication.medic}</option>
+                                              </select>
+                                              <select
+                                                  className='w-[20%] mx-1 h-[3rem] rounded text-center text-[#705396]'
+                                                  defaultValue={medication.val}
+                                                  disabled
+                                              >
+                                                  <option value={medication.val}>{medication.val} วัน</option>
+                                              </select>
+                                          </div>
+                                      ))}
+                                  </div> */}
                             </div>
                         </div>
 
@@ -143,7 +123,7 @@ const PatientstateID = ({ items }: PatientStateOTP) => {
                                 <div className='text-[#461F78] text-3xl font-semibold my-2'>OTP</div>
                                 <div className='text-[#705396] my-2'>รหัสนี้ใช้สำหรับลงทะเบียนผู้ใช้งาน Line OA</div>
                                 <div className='p-10 bg-[#F8F5FB] my-2'>
-                                    <span className='text-[#7F57D0] text-4xl tracking-widest'>{items.patient.otp}</span>
+                                    <span className='text-[#7F57D0] text-4xl tracking-widest'></span>
                                 </div>
                             </div>
                         </div>
@@ -155,4 +135,4 @@ const PatientstateID = ({ items }: PatientStateOTP) => {
     )
 }
 
-export default PatientstateID
+export default PreloadData
