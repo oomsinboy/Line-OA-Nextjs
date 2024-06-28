@@ -18,8 +18,11 @@ function NewPatient() {
     const [currentDate, setCurrentDate] = useState<string>('');
     const [appointmentDate, setAppointmentDate] = useState<string>('');
     // const [medications, setMedications] = useState([{ id: Date.now(), name: '', dose: '' }]);
-    const [medications, setMedications] = useState<{ id: number; name: string; dose: string }[]>([]);
+    // const [medications, setMedications] = useState<{ id: number; name: string; dose: string }[]>([]);
+    const [medications, setMedications] = useState<{ id: number; name: string; dose: string; isOther: boolean }[]>([]);
+
     const [medicalList, setMedicalList] = useState<MedicalList[]>([]);
+    const [otherMedications, setOtherMedications] = useState<{ [key: number]: string }>({});
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
     const [errorMed, setErrorMed] = useState<string>('');
     const [response, setResponse] = useState<any>(null);
@@ -53,23 +56,51 @@ function NewPatient() {
         }
     }
 
+    // const addMedication = () => {
+    //     setMedications([...medications, { id: Date.now(), name: '', dose: '' }]);
+    // };
+
     const addMedication = () => {
-        setMedications([...medications, { id: Date.now(), name: '', dose: '' }]);
-    };
+        setMedications([...medications, { id: Date.now(), name: '', dose: '', isOther: false }]);
+      };
 
     const removeMedication = (id: number) => {
         setMedications(medications.filter(medication => medication.id !== id));
     };
 
-    const handleMedicationNameChange = (e: React.ChangeEvent<HTMLSelectElement>, id: number) => {
+    // const handleMedicationNameChange = (e: React.ChangeEvent<HTMLSelectElement>, id: number) => {
+    //     const selectedMedications = medications.map(medication => {
+    //         if (medication.id === id) {
+    //             return { ...medication, name: e.target.value };
+    //         }
+    //         return medication;
+    //     });
+    //     setMedications(selectedMedications);
+    // };
+
+    const handleMedicationNameChange = (e: React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>, id: number) => {
+        const value = e.target.value;
         const selectedMedications = medications.map(medication => {
-            if (medication.id === id) {
-                return { ...medication, name: e.target.value };
-            }
-            return medication;
+          if (medication.id === id) {
+            return { ...medication, name: value, isOther: value === 'other' };
+          }
+          return medication;
         });
         setMedications(selectedMedications);
-    };
+      };
+    
+
+      const handleOtherMedicationChange = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
+        const updatedOtherMedications = { ...otherMedications, [id]: e.target.value };
+        setOtherMedications(updatedOtherMedications);
+        const selectedMedications = medications.map(medication => {
+          if (medication.id === id) {
+            return { ...medication, name: e.target.value };
+          }
+          return medication;
+        });
+        setMedications(selectedMedications);
+      };
 
     const handleMedicationDoseChange = (e: React.ChangeEvent<HTMLSelectElement>, id: number) => {
         const selectedMedications = medications.map(medication => {
@@ -295,7 +326,7 @@ function NewPatient() {
                                     <div className='max-h-[45dvh] overflow-y-auto'>
                                         {medications.map((medication) => (
                                             <div key={medication.id} className='flex justify-between pt-2'>
-                                                <select
+                                                {/* <select
                                                     className='w-[70%] mx-1 h-[3rem] rounded bg-[#F8F5FB] text-center text-[#705396]'
                                                     value={medication.name}
                                                     onChange={(e) => handleMedicationNameChange(e, medication.id)}
@@ -304,7 +335,29 @@ function NewPatient() {
                                                     {medicalList.map(medical => (
                                                         <option key={medical.id} value={medical.name}>{medical.name}</option>
                                                     ))}
-                                                </select>
+                                                    <option value='other'>อื่นๆ</option>
+                                                </select> */}
+                                                {medication.isOther ? (
+            <input
+              type='text'
+              className='w-[70%] mx-1 h-[3rem] rounded bg-[#F8F5FB] text-center text-[#705396]'
+              value={otherMedications[medication.id] || ''}
+              onChange={(e) => handleOtherMedicationChange(e, medication.id)}
+              placeholder='ระบุชื่อยา'
+            />
+                                                ) : (
+                                                    <select
+                                                        className='w-[70%] mx-1 h-[3rem] rounded bg-[#F8F5FB] text-center text-[#705396]'
+                                                        value={medication.name}
+                                                        onChange={(e) => handleMedicationNameChange(e, medication.id)}
+                                                    >
+                                                        <option value='' disabled>เลือกยา</option>
+                                                        {medicalList.map(medical => (
+                                                            <option key={medical.id} value={medical.name}>{medical.name}</option>
+                                                        ))}
+                                                        <option value='other'>อื่นๆ</option>
+                                                    </select>
+                                                )}
                                                 <select
                                                     className='w-[20%] mx-1 h-[3rem] rounded text-center text-[#705396]'
                                                     value={medication.dose}

@@ -8,6 +8,7 @@ import { CallViewID } from '@/components/type';
 import PatientstateID from '@/components/patient/PatientStateid';
 import PreloadData from '@/components/patient/PreloadView';
 import Image from 'next/image';
+import Calendar from '@/components/patient/Calendar';
 
 function ViewPatient() {
     const searchParams = useSearchParams();
@@ -82,7 +83,7 @@ function ViewPatient() {
                                 </div>
                             </div>
                             <div className='flex'>
-                                <div className='border border-red-500 w-[60%]'>
+                                <div className='border border-red-500 w-[55%]'>
                                     <form action="">
                                         <div className='flex justify-between'>
                                             <div className="w-1/2 pr-4">
@@ -109,23 +110,10 @@ function ViewPatient() {
                                                         // onChange={(e) => setLastname(e.target.value)}
                                                         />
                                                     </label>
-
                                                 </div>
                                             </div>
-                                            {/* <div className="w-[30%] pl-4">
-                                                <div className='my-2'>
-                                                    <span className='text-[#705396] '>นามสกุล</span>
-                                                    <label className="input input-bordered flex items-center gap-2 w-full">
-                                                        <input
-                                                            type="text"
-                                                            className="grow text-[#705396]"
-                                                        />
-                                                    </label>
-                                                    
-                                                </div>
-                                            </div> */}
                                         </div>
-                                        {/* <div className='flex justify-between'>
+                                        <div className='flex justify-between'>
                                             <div className="w-1/2 pr-4">
                                                 <div className='my-2'>
                                                     <span className='text-[#705396]'>เลขที่บัตรประจำตัวประชาชน</span>
@@ -133,11 +121,10 @@ function ViewPatient() {
                                                         <input
                                                             type="text"
                                                             className="grow text-[#705396]"
-                                                            // value={idCard}
-                                                            // onChange={handleIdCardChange}
+                                                            // value={idcard}
                                                             maxLength={13}
                                                             pattern="\d{13}"
-                                                            title="กรุณากรอกตัวเลข 13 หลัก"
+                                                            readOnly
                                                         />
                                                     </label>
                                                 </div>
@@ -149,18 +136,74 @@ function ViewPatient() {
                                                         <input
                                                             type="date"
                                                             className="grow text-[#705396]"
-                                                            // value={birthDate}
-                                                            // onChange={(e) => setBirthDate(e.target.value)}
+                                                        // value={dob}
+                                                        // readOnly
                                                         />
                                                     </label>
                                                 </div>
                                             </div>
-                                        </div> */}
+                                        </div>
+                                        <div className='flex justify-between'>
+                                            <div className="w-1/2 pr-4">
+                                                <div className='my-2'>
+                                                    <span className='text-[#705396]'>วันที่ลงทะเบียน</span>
+                                                    <label className=" bg-[#F8F5FB] input input-bordered flex items-center gap-2 w-full">
+                                                        <input
+                                                            type="text"
+                                                            className="grow pointer-events-none text-[#705396]"
+                                                        // value={register_time}
+                                                        // readOnly
+                                                        />
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div className="w-1/2 pl-4">
+                                                <div className='my-2'>
+                                                    <span className='text-[#705396]'>วันนัดหมาย</span>
+                                                    <label className="input input-bordered flex items-center gap-2 w-full">
+                                                        <input
+                                                            type="datetime-local"
+                                                            className="grow text-[#705396]"
+                                                        // value={datetimeLocal}
+                                                        // readOnly
+                                                        />
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </form>
+                                    <div className='my-2 w-1/2 pr-4'>
+                                        <div className='flex'>
+                                            <span className='text-[#705396]'>เลือกยาที่ควรหยุดรับประทาน</span>
+                                        </div>
+                                        <div className='rounded bg-[#E8DBF5] min-h-[48dvh] p-3'>
+                                            {/* <span className='text-[#705396]'> รายการที่เลือก {med.length} รายการ</span> */}
+                                            <div className='max-h-[45dvh] overflow-y-auto'>
+                                                {/* {med.map((medication: any, index: number) => (
+                                                    <div key={index} className='flex justify-between pt-2'>
+                                                        <select
+                                                            className='w-[70%] mx-1 h-[3rem] rounded bg-[#F8F5FB] text-center text-[#705396]'
+                                                            defaultValue={medication.medic}
+                                                            disabled
+                                                        >
+                                                            <option value={medication.medic}>{medication.medic}</option>
+                                                        </select>
+                                                        <select
+                                                            className='w-[20%] mx-1 h-[3rem] rounded text-center text-[#705396]'
+                                                            defaultValue={medication.val}
+                                                            disabled
+                                                        >
+                                                            <option value={medication.val}>{medication.val} วัน</option>
+                                                        </select>
+                                                    </div>
+                                                ))} */}
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className='border border-green-500 w-[40%]'>
-                                    <div className='flex'>
-                                        <div className="w-[77.278%] pl-8">
+                                <div className='border border-green-500 w-[45%]'>
+                                    <div className='flex pl-8'>
+                                        <div className="w-[63.016%] ">
                                             <div className='my-2'>
                                                 <span className='text-[#705396] '>นามสกุล</span>
                                                 <label className="relative input input-bordered flex items-center gap-2 w-full">
@@ -182,6 +225,7 @@ function ViewPatient() {
                                             </button>
                                         </div>
                                     </div>
+                                    <Calendar/>
                                 </div>
                             </div>
                         </div>
