@@ -136,3 +136,16 @@ const PreloadData = () => {
 }
 
 export default PreloadData
+
+export const PreloadWhite = () => {
+    return (
+        <div className='px-8'>
+            <div className='h-full w-full rounded-[15px] bg-white p-5 '>
+                <div className='min-h-[81.71dvh] flex flex-col'>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+// exports PreloadWhite

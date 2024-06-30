@@ -21,10 +21,12 @@ export interface MedicalList {
 
 // Patient View
 export interface PatientViewID {
+  firstname: string | number | readonly string[] | undefined;
+  state(state: any): unknown;
   visit_id: number;
   patient_fname: string;
   patient_lname: string;
-  line_name: string | null;
+  line_name: string;
   line_id: string | null;
   id_card: string;
   dob: string;

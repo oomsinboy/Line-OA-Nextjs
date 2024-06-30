@@ -155,7 +155,7 @@ const PatientBody = ({ items }: PatientProps) => {
                                             <td>{item.patient_name}</td>
                                             <td>{item.state}</td>
                                             <td className=' justify-center flex'>
-                                                <Link href={`/home/patient/view-patient?id=${item.visit_id}&state=${item.state}`}>
+                                                <Link href={`/home/patient/view-patient?id=${item.visit_id}`}>
                                                     <Image
                                                         src={`/image/icon_view.png`}
                                                         alt="logo"
