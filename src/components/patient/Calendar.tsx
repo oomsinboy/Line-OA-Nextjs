@@ -11,7 +11,7 @@ interface CalendarProps {
 
 const Calendar = ({ dailyDetail }: CalendarProps) => {
 
-    console.log(dailyDetail);
+    // console.log(dailyDetail);
 
 
     const [currentMonth, setCurrentMonth] = useState(moment());

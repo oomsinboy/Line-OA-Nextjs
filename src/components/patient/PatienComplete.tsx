@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image';
+import { MedicalList, PatientStateOTP } from '../type'
 import Calendar from './Calendar';
-import { MedicalList, PatientStateOTP } from '../type';
-import { formatDate } from '../help';
 import axios from 'axios';
-import Swal from 'sweetalert2';
+import { formatDate } from '../help';
 
-const PatientRegis = ({ items }: PatientStateOTP) => {
+const PatienComplete = ({ items }: PatientStateOTP) => {
     const [isEditing, setIsEditing] = useState<boolean>(false);
     const [firstname, setFirstname] = useState<string>(items.patient.patient_fname);
     const [lastname, setLastname] = useState<string>(items.patient.patient_lname);
@@ -61,37 +60,8 @@ const PatientRegis = ({ items }: PatientStateOTP) => {
 
     const handleSaveClick = async () => {
 
-        const invalidMed = medications.some(medication => !medication.name || !medication.dose);
-
-        if (invalidMed) {
-            setErrorMed('กรุณากรอกข้อมูลยาและจำนวนวันที่รับประทานให้ครบถ้วน');
-            return;
-        } else {
-            setErrorMed('');
-        }
-        const newErrors: { [key: string]: string } = {};
-
-        if (!firstname.trim()) newErrors.firstname = 'กรุณากรอกชื่อ';
-        if (!lastname.trim()) newErrors.lastname = 'กรุณากรอกนามสกุล';
-        if (!idCard.trim()) {
-            newErrors.idCard = 'กรุณากรอกบัตรประจำตัวประชาชน';
-        } else if (idCard.trim().length !== 13) {
-            newErrors.idCard = 'กรุณากรอกบัตรประจำตัวประชาชนให้ถูกต้อง (13 หลัก)';
-        }
-        if (!birthDate.trim()) newErrors.birthDate = 'กรุณากรอกวันเดือนปีเกิด';
-        if (!appointmentDate.trim()) newErrors.appointmentDate = 'กรุณากรอกวันนัดหมาย';
-
-        if (Object.keys(newErrors).length > 0) {
-            setErrors(newErrors);
-            return;
-        } else {
-            setErrors({});
-        }
-
-        // setIsEditing(false);
-
+        setIsEditing(false);
         await sendEditform();
-
         console.log(items.patient);
 
     };
@@ -160,12 +130,40 @@ const PatientRegis = ({ items }: PatientStateOTP) => {
 
     const sendEditform = async () => {
 
+        const invalidMed = medications.some(medication => !medication.name || !medication.dose);
+
+        if (invalidMed) {
+            setErrorMed('กรุณากรอกข้อมูลยาและจำนวนวันที่รับประทานให้ครบถ้วน');
+            return;
+        } else {
+            setErrorMed('');
+        }
+
         const medData = medications
             // .filter(medication => medication.dose && medication.name)
             .map(medication => ({
                 val: medication.dose,
                 medic: medication.name,
             }));
+
+        const newErrors: { [key: string]: string } = {};
+
+        if (!firstname.trim()) newErrors.firstname = 'กรุณากรอกชื่อ';
+        if (!lastname.trim()) newErrors.lastname = 'กรุณากรอกนามสกุล';
+        if (!idCard.trim()) {
+            newErrors.idCard = 'กรุณากรอกบัตรประจำตัวประชาชน';
+        } else if (idCard.trim().length !== 13) {
+            newErrors.idCard = 'กรุณากรอกบัตรประจำตัวประชาชนให้ถูกต้อง (13 หลัก)';
+        }
+        if (!birthDate.trim()) newErrors.birthDate = 'กรุณากรอกวันเดือนปีเกิด';
+        if (!appointmentDate.trim()) newErrors.appointmentDate = 'กรุณากรอกวันนัดหมาย';
+
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+            return;
+        } else {
+            setErrors({});
+        }
 
         const ConvertMed = JSON.stringify(medData);
 
@@ -179,48 +177,43 @@ const PatientRegis = ({ items }: PatientStateOTP) => {
         formdata.append('appointment_time', appointmentDate.split('T')[1]);
         formdata.append('med', ConvertMed);
 
-        try {
-            const response = await axios.post(`${process.env.NEXT_PUBLIC_CALLAPI}visit/task/${items.patient.visit_id}`, formdata);
-            // console.log('Data saved successfully:', response.data);
+        // try {
+        //     const response = await axios.post(`${process.env.NEXT_PUBLIC_CALLAPI}visit/task/${items.patient.visit_id}`, formdata);
+        //     // console.log('Data saved successfully:', response.data);
 
-            if (response.status === 200) {
-                // setResponse(response.data);
-                setIsEditing(false);
-                Swal.fire({
-                    title: 'สำเร็จ',
-                    text: 'คุณได้การแก้ไขเรียบร้อยแล้ว',
-                    icon: 'success',
-                    confirmButtonText: 'ปิด',
-                });
-            } else {
-                Swal.fire({
-                    title: 'ขออภัย',
-                    text: "คุณทำรายการไม่ถูกต้อง กรุณาตรวจสอบใหม่อีกครั้ง",
-                    icon: 'warning',
-                    confirmButtonText: 'ปิด',
-                    customClass: {
-                        icon: 'custom-swal2-warning',
-                    }
-                });
-            }
-        } catch (error) {
-            console.error('Error saving data:', error);
+        //     if (response.status === 200) {
+        //         // setResponse(response.data);
+        //         Swal.fire({
+        //             title: 'สำเร็จ',
+        //             text: 'คุณได้การแก้ไขเรียบร้อยแล้ว',
+        //             icon: 'success',
+        //             confirmButtonText: 'ปิด',
+        //         });
+        //     } else {
+        //         Swal.fire({
+        //             title: 'ขออภัย',
+        //             text: "คุณทำรายการไม่ถูกต้อง กรุณาตรวจสอบใหม่อีกครั้ง",
+        //             icon: 'warning',
+        //             confirmButtonText: 'ปิด',
+        //             customClass: {
+        //                 icon: 'custom-swal2-warning',
+        //             }
+        //         });
+        //     }
+        // } catch (error) {
+        //     console.error('Error saving data:', error);
 
-            Swal.fire({
-                title: 'ขออภัย',
-                text: "เกิดข้อผิดพลาดในการบันทึกข้อมูล กรุณาลองใหม่อีกครั้ง",
-                icon: 'error',
-                confirmButtonText: 'ปิด',
-                customClass: {
-                    icon: 'custom-swal2-error',
-                }
-            });
-        }
+        //     Swal.fire({
+        //         title: 'ขออภัย',
+        //         text: "เกิดข้อผิดพลาดในการบันทึกข้อมูล กรุณาลองใหม่อีกครั้ง",
+        //         icon: 'error',
+        //         confirmButtonText: 'ปิด',
+        //         customClass: {
+        //             icon: 'custom-swal2-error',
+        //         }
+        //     });
+        // }
     }
-
-    console.log(items.patient);
-
-
 
     return (
         <div className='px-8'>
@@ -228,10 +221,10 @@ const PatientRegis = ({ items }: PatientStateOTP) => {
                 <div className='min-h-[81.71dvh] flex flex-col'>
                     <div className='flex justify-between'>
                         <div>
-                            <div className='text-2xl text-[#5955B3] font-semibold'>ลงทะเบียนผู้ป่วย</div>
+                            <div className='text-2xl text-[#5955B3] font-semibold'>ตรวจสำเร็จแล้ว</div>
                         </div>
                         <div className='flex'>
-                            <button
+                            {/* <button
                                 onClick={isEditing ? handleSaveClick : handleEditClick}
                                 className={`relative text-white w-38 font-light btn btn-active mx-4 ${isEditing ? 'bg-[#693092]' : 'bg-[#AF88FF]'}`}
                             >
@@ -243,8 +236,20 @@ const PatientRegis = ({ items }: PatientStateOTP) => {
                                     height={30}
                                 />
                                 <span>{isEditing ? 'Save' : 'Edit'}</span>
-                            </button>
+                            </button> */}
 
+                            <button
+                                className={`relative text-white w-38 font-light btn btn-active mx-4 bg-[#693092]`}
+                            >
+                                <Image
+                                    className='gap-2'
+                                    src='/image/icon_new_appointment.png'
+                                    alt="logo"
+                                    width={30}
+                                    height={30}
+                                />
+                                <span>New Appointment</span>
+                            </button>
                         </div>
                     </div>
                     <div className='flex'>
@@ -263,7 +268,6 @@ const PatientRegis = ({ items }: PatientStateOTP) => {
                                                     onChange={(e) => setFirstname(e.target.value)}
                                                 />
                                             </label>
-                                            {errors.firstname && <span className='text-red-500'>{errors.firstname}</span>}
                                         </div>
                                     </div>
                                     <div className="w-1/2 pl-4">
@@ -350,7 +354,7 @@ const PatientRegis = ({ items }: PatientStateOTP) => {
                             <div className='my-2 w-1/2 pr-4'>
                                 <div className='flex h-[30px]'>
                                     <span className='text-[#705396]'>เลือกยาที่ควรหยุดรับประทาน</span>
-                                    {isEditing && (
+                                    {/* {isEditing && (
                                         <button className='mx-2' onClick={addMedication}>
                                             <Image
                                                 src={`/image/icon_addplus.png`}
@@ -359,123 +363,12 @@ const PatientRegis = ({ items }: PatientStateOTP) => {
                                                 height={30}
                                             />
                                         </button>
-                                    )}
+                                    )} */}
                                 </div>
                                 <div className='rounded bg-[#E8DBF5] min-h-[48dvh] p-3'>
                                     <span className='text-[#705396]'> รายการที่เลือก {items.patient.med.length} รายการ</span>
                                     <div className='max-h-[45dvh] overflow-y-auto'>
-                                        {isEditing ? (
-                                            <div>
-                                                {medications.map((medication) => (
-                                                    <div key={medication.id} className='flex justify-between pt-2'>
-                                                        {medication.isOther ? (
-                                                            <input
-                                                                type='text'
-                                                                className='w-[70%] mx-1 h-[3rem] rounded bg-[#F8F5FB] text-center text-[#705396]'
-                                                                value={otherMedications[medication.id] || ''}
-                                                                onChange={(e) => handleOtherMedicationChange(e, medication.id)}
-                                                                placeholder='ระบุชื่อยา'
-                                                            />
-                                                        ) : (
-                                                            <select
-                                                                className='w-[70%] mx-1 h-[3rem] rounded bg-[#F8F5FB] text-center text-[#705396]'
-                                                                value={medication.name}
-                                                                onChange={(e) => handleMedicationNameChange(e, medication.id)}
-                                                            >
-                                                                <option value='' disabled>เลือกยา</option>
-                                                                {medicalList.map(medical => (
-                                                                    <option key={medical.id} value={medical.name}>{medical.name}</option>
-                                                                ))}
-                                                                <option value='other'>อื่นๆ</option>
-                                                            </select>
-                                                        )}
-                                                        <select
-                                                            className='w-[20%] mx-1 h-[3rem] rounded text-center text-[#705396]'
-                                                            value={medication.dose}
-                                                            onChange={(e) => handleMedicationDoseChange(e, medication.id)}
-                                                        >
-                                                            <option value='' disabled>วัน</option>
-                                                            {[...Array(7)].map((_, i) => (
-                                                                <option key={i + 1} value={i + 1}>{i + 1} วัน</option>
-                                                            ))}
-                                                        </select>
-                                                        <button className='mx-1' onClick={() => removeMedication(medication.id)}>
-                                                            <Image
-                                                                src={`/image/icon_delete.png`}
-                                                                alt="delete medication"
-                                                                width={30}
-                                                                height={30}
-                                                            />
-                                                        </button>
-                                                    </div>
-                                                ))}
-                                                {/* {medications.map((medication) => (
-                                                    <div key={medication.id} className='flex justify-between pt-2'>
-                                                        {medication.isOther ? (
-                                                            <input
-                                                                type='text'
-                                                                className='w-[70%] mx-1 h-[3rem] rounded bg-[#F8F5FB] text-center text-[#705396]'
-                                                                value={otherMedications[medication.id] || ''}
-                                                                onChange={(e) => handleOtherMedicationChange(e, medication.id)}
-                                                                placeholder='ระบุชื่อยา'
-                                                            />
-                                                        ) : (
-                                                            <select
-                                                                className='w-[70%] mx-1 h-[3rem] rounded bg-[#F8F5FB] text-center text-[#705396]'
-                                                                value={medication.name}
-                                                                onChange={(e) => handleMedicationNameChange(e, medication.id)}
-                                                            >
-                                                                <option value='' disabled>เลือกยา</option>
-                                                                {medicalList.map(medical => (
-                                                                    <option key={medical.id} value={medical.name}>{medical.name}</option>
-                                                                ))}
-                                                                <option value='other'>อื่นๆ</option>
-                                                            </select>
-                                                        )}
-                                                        <select
-                                                            className='w-[20%] mx-1 h-[3rem] rounded text-center text-[#705396]'
-                                                            value={medication.dose}
-                                                            onChange={(e) => handleMedicationDoseChange(e, medication.id)}
-                                                        >
-                                                            <option value='' disabled>วัน</option>
-                                                            {[...Array(7)].map((_, i) => (
-                                                                <option key={i + 1} value={i + 1}>{i + 1} วัน</option>
-                                                            ))}
-                                                        </select>
-                                                        <button className='mx-1' onClick={() => removeMedication(medication.id)}>
-                                                            <Image
-                                                                src={`/image/icon_delete.png`}
-                                                                alt="delete medication"
-                                                                width={30}
-                                                                height={30}
-                                                            />
-                                                        </button>
-                                                    </div>
-                                                ))} */}
-                                            </div>
-                                        ) : (
-                                            <div>
-                                                {items.patient.med.map((medication: any, index: number) => (
-                                                    <div key={index} className='flex justify-between pt-2'>
-                                                        <select
-                                                            className='w-[70%] mx-1 h-[3rem] rounded bg-[#F8F5FB] text-center text-[#705396]'
-                                                            defaultValue={medication.medic}
-                                                            disabled
-                                                        >
-                                                            <option value={medication.medic}>{medication.medic}</option>
-                                                        </select>
-                                                        <select
-                                                            className='w-[20%] mx-1 h-[3rem] rounded text-center text-[#705396]'
-                                                            defaultValue={medication.val}
-                                                            disabled
-                                                        >
-                                                            <option value={medication.val}>{medication.val} วัน</option>
-                                                        </select>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        )}
-                                        {/* {items.patient.med.map((medication: any, index: number) => (
+                                        {items.patient.med.map((medication: any, index: number) => (
                                             <div key={index} className='flex justify-between pt-2'>
                                                 <select
                                                     className='w-[70%] mx-1 h-[3rem] rounded bg-[#F8F5FB] text-center text-[#705396]'
@@ -492,7 +385,7 @@ const PatientRegis = ({ items }: PatientStateOTP) => {
                                                     <option value={medication.val}>{medication.val} วัน</option>
                                                 </select>
                                             </div>
-                                        ))} */}
+                                        ))}
                                     </div>
                                 </div>
                             </div>
@@ -532,4 +425,4 @@ const PatientRegis = ({ items }: PatientStateOTP) => {
     )
 }
 
-export default PatientRegis
+export default PatienComplete

@@ -62,7 +62,7 @@ function NewPatient() {
 
     const addMedication = () => {
         setMedications([...medications, { id: Date.now(), name: '', dose: '', isOther: false }]);
-      };
+    };
 
     const removeMedication = (id: number) => {
         setMedications(medications.filter(medication => medication.id !== id));
@@ -81,26 +81,26 @@ function NewPatient() {
     const handleMedicationNameChange = (e: React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>, id: number) => {
         const value = e.target.value;
         const selectedMedications = medications.map(medication => {
-          if (medication.id === id) {
-            return { ...medication, name: value, isOther: value === 'other' };
-          }
-          return medication;
+            if (medication.id === id) {
+                return { ...medication, name: value, isOther: value === 'other' };
+            }
+            return medication;
         });
         setMedications(selectedMedications);
-      };
-    
+    };
 
-      const handleOtherMedicationChange = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
+
+    const handleOtherMedicationChange = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
         const updatedOtherMedications = { ...otherMedications, [id]: e.target.value };
         setOtherMedications(updatedOtherMedications);
         const selectedMedications = medications.map(medication => {
-          if (medication.id === id) {
-            return { ...medication, name: e.target.value };
-          }
-          return medication;
+            if (medication.id === id) {
+                return { ...medication, name: e.target.value };
+            }
+            return medication;
         });
         setMedications(selectedMedications);
-      };
+    };
 
     const handleMedicationDoseChange = (e: React.ChangeEvent<HTMLSelectElement>, id: number) => {
         const selectedMedications = medications.map(medication => {
@@ -338,13 +338,13 @@ function NewPatient() {
                                                     <option value='other'>อื่นๆ</option>
                                                 </select> */}
                                                 {medication.isOther ? (
-            <input
-              type='text'
-              className='w-[70%] mx-1 h-[3rem] rounded bg-[#F8F5FB] text-center text-[#705396]'
-              value={otherMedications[medication.id] || ''}
-              onChange={(e) => handleOtherMedicationChange(e, medication.id)}
-              placeholder='ระบุชื่อยา'
-            />
+                                                    <input
+                                                        type='text'
+                                                        className='w-[70%] mx-1 h-[3rem] rounded bg-[#F8F5FB] text-center text-[#705396]'
+                                                        value={otherMedications[medication.id] || ''}
+                                                        onChange={(e) => handleOtherMedicationChange(e, medication.id)}
+                                                        placeholder='ระบุชื่อยา'
+                                                    />
                                                 ) : (
                                                     <select
                                                         className='w-[70%] mx-1 h-[3rem] rounded bg-[#F8F5FB] text-center text-[#705396]'
