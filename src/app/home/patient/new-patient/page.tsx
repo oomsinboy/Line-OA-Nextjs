@@ -140,7 +140,19 @@ function NewPatient() {
             newErrors.idCard = 'กรุณากรอกบัตรประจำตัวประชาชนให้ถูกต้อง (13 หลัก)';
         }
         if (!birthDate.trim()) newErrors.birthDate = 'กรุณากรอกวันเดือนปีเกิด';
-        if (!appointmentDate.trim()) newErrors.appointmentDate = 'กรุณากรอกวันนัดหมาย';
+        if (!appointmentDate.trim()) {
+            newErrors.appointmentDate = 'กรุณากรอกวันนัดหมาย';
+        } else {
+            const currentDateObj = new Date(currentDate);
+            const appointmentDateObj = new Date(appointmentDate);
+            const differenceInTime = appointmentDateObj.getTime() - currentDateObj.getTime();
+            const differenceInDays = differenceInTime / (1000 * 3600 * 24);
+
+            if (differenceInDays <= 4) {
+                newErrors.appointmentDate = 'กรุณากรอกวันนัดหมายที่มากกว่าวันปัจจุบัน 5 วัน';
+            }
+        }
+
 
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);

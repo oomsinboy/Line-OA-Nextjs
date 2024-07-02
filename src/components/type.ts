@@ -9,8 +9,13 @@ export interface PatientData {
   state: string;
 }
 
+export interface FixPatient {
+  all_visit : PatientData[];
+  daily_noti: number
+}
+
 export interface PatientProps {
-  items: PatientData[];
+  items: FixPatient;
 }
 
 // Patient New
@@ -24,6 +29,7 @@ export interface PatientViewID {
   firstname: string | number | readonly string[] | undefined;
   state(state: any): unknown;
   visit_id: number;
+  patient_id: number;
   patient_fname: string;
   patient_lname: string;
   line_name: string;
@@ -33,6 +39,7 @@ export interface PatientViewID {
   register_date: string;
   appointment_date: string;
   appointment_time: string;
+  state_id: number;
   med: {
       val: string;
       medic: string;

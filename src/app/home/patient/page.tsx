@@ -2,14 +2,16 @@
 
 import Navbar from '@/components/Navbar'
 import React from 'react'
-import Image from 'next/image';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { PatientData } from '@/components/type';
+import { FixPatient } from '@/components/type';
 import PatientBody from '@/components/patient/PatientBody';
+import { PreloadWhite } from '@/components/patient/PreloadView';
 
 function PatientPage() {
-  const [dataPatient, setDataPatient] = useState<PatientData[]>([]);
+  const [dataPatient, setDataPatient] = useState<FixPatient | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
 
   useEffect(() => {
     const fetchVisit = () => {
@@ -23,16 +25,24 @@ function PatientPage() {
         });
     }
 
+    setIsLoading(false);
+
     fetchVisit()
   }, []);
 
-  console.log(dataPatient);
-  
+  if (isLoading) {
+    return (
+      <div className='min-h-screen'>
+        <Navbar />
+        <PreloadWhite />
+      </div>
+    );
+  }
 
   return (
     <div className='min-h-screen'>
       <Navbar />
-      <PatientBody items={dataPatient} />
+      {dataPatient && <PatientBody items={dataPatient} />}
     </div>
   )
 }

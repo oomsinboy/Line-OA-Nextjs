@@ -6,13 +6,16 @@ import { formatDate } from '../help';
 import Link from 'next/link';
 
 const PatientBody = ({ items }: PatientProps) => {
-    const [currentItems, setCurrentItems] = useState<PatientData[]>(items);
+    const [currentItems, setCurrentItems] = useState<PatientData[]>(items.all_visit);
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [itemsPerPage] = useState<number>(12);
 
+    console.log(items);
+
+
     useEffect(() => {
-        setCurrentItems(items);
+        setCurrentItems(items.all_visit);
     }, [items]);
 
     // Filtered items based on search term
@@ -21,8 +24,7 @@ const PatientBody = ({ items }: PatientProps) => {
     // );
 
     const filteredItems = currentItems
-    .filter(item => item.patient_name.toLowerCase().includes(searchTerm.toLowerCase()))
-    .reverse();
+        .filter(item => item.patient_name.toLowerCase().includes(searchTerm.toLowerCase())).reverse();
 
 
     // Pagination calculations
@@ -120,9 +122,11 @@ const PatientBody = ({ items }: PatientProps) => {
                             </div>
                             <button className="relative text-white w-42 font-light bg-[#AF88FF] btn btn-active mx-4">
                                 <span>Notifications Today</span>
-                                <div className='absolute top-0 right-0 translate-x-[40%] -translate-y-[40%] text-white rounded-full bg-red-500 w-6 h-6 flex items-center justify-center'>
-                                    0
-                                </div>
+                                {items.daily_noti > 0 && (
+                                    <div className='absolute top-0 right-0 translate-x-[40%] -translate-y-[40%] text-white rounded-full bg-red-500 w-6 h-6 flex items-center justify-center'>
+                                        {items.daily_noti}
+                                    </div>
+                                )}
                             </button>
                             <Link href={`${process.env.NEXT_PUBLIC_BASEROUTE}home/patient/new-patient`} className="relative text-white w-40 font-light bg-[#AF88FF] btn btn-active">
                                 <Image

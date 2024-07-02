@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import moment from 'moment';
 import 'moment/locale/th';
 import Image from 'next/image';
+import ModalPatient from './ModalPatient';
 
 moment.locale('th');
 
@@ -10,12 +11,10 @@ interface CalendarProps {
 }
 
 const Calendar = ({ dailyDetail }: CalendarProps) => {
-
-    // console.log(dailyDetail);
-
+    const [showModal, setShowModal] = useState<boolean>(false);
+    const [modalContent, setModalContent] = useState<any>(null);
 
     const [currentMonth, setCurrentMonth] = useState(moment());
-
     const startDay = currentMonth.clone().startOf('month').startOf('week');
     const endDay = currentMonth.clone().endOf('month').endOf('week');
     const date = startDay.clone().subtract(1, 'day');
@@ -53,6 +52,14 @@ const Calendar = ({ dailyDetail }: CalendarProps) => {
                 ))}
             </div>
         );
+    };
+
+    const handleButtonClick = (detail: any) => {
+
+        console.log(detail);
+
+        setModalContent(detail);
+        setShowModal(true);
     };
 
     return (
@@ -147,7 +154,7 @@ const Calendar = ({ dailyDetail }: CalendarProps) => {
                                     className={`relative flex justify-end items-end text-center h-24 p-2 w-full border ${isSameMonth(day) ? '' : 'text-gray-400'}`}
                                     key={j}
                                 >
-                                     {dailyDetail.map((detail, index) => {
+                                    {dailyDetail.map((detail, index) => {
                                         const detailDate = moment(detail.date_before_appointment);
                                         if (detailDate.isSame(day, 'day')) {
                                             const isFirst = index === 0;
@@ -167,8 +174,20 @@ const Calendar = ({ dailyDetail }: CalendarProps) => {
                                                             ส่องกล้อง
                                                         </div>
                                                     ) : (
+                                                        // <button
+                                                        //     className={`absolute bottom-2 left-2 rounded text-white w-7 h-7 font-light flex justify-center items-center ${isToday || !isPast ? 'bg-[#705396] hover:bg-[#BE77F1]' : 'bg-[#AEB2B5] hover:bg-[#e5e7eb]'}`}
+                                                        // >
+                                                        //     <Image
+                                                        //         className='gap-2'
+                                                        //         src={isToday || !isPast ? `/image/icon_edit.png` : `/image/icon_edit_pass.png`}
+                                                        //         alt="logo"
+                                                        //         width={20}
+                                                        //         height={20}
+                                                        //     />
+                                                        // </button>
                                                         <button
                                                             className={`absolute bottom-2 left-2 rounded text-white w-7 h-7 font-light flex justify-center items-center ${isToday || !isPast ? 'bg-[#705396] hover:bg-[#BE77F1]' : 'bg-[#AEB2B5] hover:bg-[#e5e7eb]'}`}
+                                                            onClick={() => handleButtonClick(detail)}
                                                         >
                                                             <Image
                                                                 className='gap-2'
@@ -193,6 +212,51 @@ const Calendar = ({ dailyDetail }: CalendarProps) => {
                     </div>
                 ))}
             </div>
+            {/* <ModalPatient isVisible={showModal} onClose={() => setShowModal(false)} title="เพิ่มบทความ">
+                <div>
+                    <div>
+
+                    </div>
+                    <div>
+                        <form className='space-y-6' action="">
+                            <div>
+                                <label className='block mb-2 font-medium text-gray-900'>
+                                    หัวข้อ
+                                </label>
+                                <input type="text" className='bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:right-blue-500 focus:border-blue-500 block w-full p-2.5' />
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </ModalPatient> */}
+
+            <ModalPatient isVisible={showModal} onClose={() => setShowModal(false)} title="รายละเอียดการแจ้งเตือน">
+                {modalContent && (
+                    <div className='p-5'>
+                        <div className='text-2xl text-[#5955B3] font-semibold'>แจ้งเตือนคุณ {modalContent.ptname}</div>
+                        <div className='text-2xl text-[#5955B3] font-semibold'>วันที่ {modalContent.date_before_appointment}</div>
+                        <div className='rounded bg-[#E8DBF5] min-h-[48dvh] p-3 mt-4 text-xl'>
+                            <span className='my-2'>ข้อควรปฏิบัติก่อนรับการตรวจส่องกล้องลำไส้ใหญ่</span>
+                            <div className='break-words max-h-[460px] ' dangerouslySetInnerHTML={{ __html: modalContent.noti_detail || '' }} />
+                        </div>
+                        {/* <p><strong>วันที่ก่อนนัด:</strong> {modalContent.date_before_appointment}</p>
+                        <div dangerouslySetInnerHTML={{ __html: modalContent.noti_detail }} />
+                        <div className="mt-4">
+                            {modalContent.noti_image && modalContent.noti_image.map((image: string, idx: number) => (
+                                <Image
+                                    key={idx}
+                                    src={image}
+                                    width={80}
+                                    height={80}
+                                    alt={`notification image ${idx}`}
+                                    className='max-w-[80px] h-[80px] object-cover rounded-lg mr-3'
+                                />
+                            ))}
+                        </div> */}
+                    </div>
+                )}
+            </ModalPatient>
         </div>
     );
 };
