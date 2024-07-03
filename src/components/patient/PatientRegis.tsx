@@ -357,7 +357,7 @@ const PatientRegis = ({ items }: PatientStateOTP) => {
                                     </div>
                                 </div>
                             </form>
-                            <div className='my-2 w-1/2 pr-4'>
+                            <div className={`my-2  ${isTodayMatching ? 'w-full' : 'w-1/2 pr-4'}`}>
                                 <div className={`flex ${isTodayMatching ? 'h-[50px]' : 'h-[30px]'}`}>
                                     {/* <span className='text-[#705396]'>เลือกยาที่ควรหยุดรับประทาน</span> */}
                                     <span className={`text-[#705396]  ${isTodayMatching ? 'flex items-center' : ''} `}>

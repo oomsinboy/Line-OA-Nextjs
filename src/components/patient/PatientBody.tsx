@@ -9,7 +9,7 @@ const PatientBody = ({ items }: PatientProps) => {
     const [currentItems, setCurrentItems] = useState<PatientData[]>([]);
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const [itemsPerPage] = useState<number>(12);
+    const [itemsPerPage] = useState<number>(10);
 
     // console.log(items);
 
