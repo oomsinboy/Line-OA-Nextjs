@@ -24,7 +24,7 @@ function Notifications() {
     fetchInfo()
   }, []);
 
-  console.log(dataNoti);
+  // console.log(dataNoti);
   return (
     <div className='min-h-screen'>
       <Navbar />

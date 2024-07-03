@@ -12,20 +12,19 @@ function PatientPage() {
   const [dataPatient, setDataPatient] = useState<FixPatient | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-
   useEffect(() => {
-    const fetchVisit = () => {
-      const apicall = process.env.NEXT_PUBLIC_CALLAPI as string;
-      axios.get(apicall + "visit/")
-        .then(res => {
-          setDataPatient(res.data);
-        })
-        .catch(error => {
-          console.error('Error fetching data:', error);
-        });
-    }
+    const fetchVisit = async () => {
 
-    setIsLoading(false);
+      try {
+        const apicall = process.env.NEXT_PUBLIC_CALLAPI as string;
+        const response = await axios.get(apicall + "visit/");
+        setDataPatient(response.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
 
     fetchVisit()
   }, []);

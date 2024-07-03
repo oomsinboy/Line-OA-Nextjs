@@ -6,16 +6,21 @@ import { formatDate } from '../help';
 import Link from 'next/link';
 
 const PatientBody = ({ items }: PatientProps) => {
-    const [currentItems, setCurrentItems] = useState<PatientData[]>(items.all_visit);
+    const [currentItems, setCurrentItems] = useState<PatientData[]>([]);
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [itemsPerPage] = useState<number>(12);
 
-    console.log(items);
+    // console.log(items);
 
 
     useEffect(() => {
-        setCurrentItems(items.all_visit);
+        // setCurrentItems(items.all_visit);
+        if (Array.isArray(items.all_visit)) {
+            setCurrentItems(items.all_visit);
+        } else {
+            console.error("คาดว่า items.all_visit จะเป็นอาร์เรย์ แต่ได้:", items.all_visit);
+        }
     }, [items]);
 
     // Filtered items based on search term

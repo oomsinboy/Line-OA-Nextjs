@@ -1,10 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // output: "export",
-  // distDir: "dist",
+  output: "export",
+  distDir: "dist",
   trailingSlash: true,
   images: {
-    unoptimized: true
+    unoptimized: true,
   },
   experimental: {
     missingSuspenseWithCSRBailout: false,
@@ -18,6 +18,21 @@ const nextConfig = {
   //       permanent: false,
   //     },
   //   ];
+  // },
+
+  // webpack: (config, { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack }
+  // ) => {
+
+  //   if(dev) {
+  //     config.watchOptions = {
+  //       followSymlinks: true,
+  //     }
+
+  //     config.snapshot.managedPaths = [];
+
+  //   }
+
+  //   return config;
   // },
 };
 

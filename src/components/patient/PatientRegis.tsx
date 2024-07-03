@@ -223,13 +223,13 @@ const PatientRegis = ({ items }: PatientStateOTP) => {
         }
     }
 
-    console.log(items.daily_detail);
+    // console.log(items.daily_detail);
 
     const isTodayMatching = items.daily_detail.slice(1, items.daily_detail.length - 1).some(detail =>
         moment().isSame(detail.date_before_appointment, 'day')
     );
 
-    console.log(isTodayMatching);
+    // console.log(isTodayMatching);
 
 
     return (

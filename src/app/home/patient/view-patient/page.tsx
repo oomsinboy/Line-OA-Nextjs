@@ -7,8 +7,6 @@ import axios from 'axios';
 import { CallViewID } from '@/components/type';
 import PatientstateID from '@/components/patient/PatientStateid';
 import PreloadData, { PreloadWhite } from '@/components/patient/PreloadView';
-import Image from 'next/image';
-import Calendar from '@/components/patient/Calendar';
 import PatientRegis from '@/components/patient/PatientRegis';
 import PatienComplete from '@/components/patient/PatienComplete';
 
@@ -21,11 +19,6 @@ function ViewPatient() {
 
     useEffect(() => {
         const paramId = searchParams.get('id');
-        const paramState = searchParams.get('state');
-
-        if (paramState) {
-            setCheckState(paramState);
-        }
 
         const fetchDataview = async () => {
             try {
@@ -53,9 +46,6 @@ function ViewPatient() {
 
     }, [searchParams]);
 
-    // console.log(dataView.patient.state);
-
-
     if (isLoading) {
         return (
             <div className='min-h-screen'>
@@ -64,8 +54,6 @@ function ViewPatient() {
             </div>
         );
     }
-
-    console.log(checkState);
 
     return (
         <div className='min-h-screen'>
