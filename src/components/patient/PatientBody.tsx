@@ -11,11 +11,7 @@ const PatientBody = ({ items }: PatientProps) => {
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [itemsPerPage] = useState<number>(10);
 
-    // console.log(items);
-
-
     useEffect(() => {
-        // setCurrentItems(items.all_visit);
         if (Array.isArray(items.all_visit)) {
             setCurrentItems(items.all_visit);
         } else {
@@ -121,19 +117,19 @@ const PatientBody = ({ items }: PatientProps) => {
                                         className="grow"
                                         placeholder='Search'
                                         value={searchTerm}
-                                        onChange={(e) => setSearchTerm(e.target.value)}
+                                        onChange={(e) => {setSearchTerm(e.target.value);setCurrentPage(1);}}
                                     />
                                 </label>
                             </div>
-                            <button className="relative text-white w-42 font-light bg-[#AF88FF] btn btn-active mx-4">
+                            <Link href={`${process.env.NEXT_PUBLIC_BASEROUTE}home/patient/notifications-today`} className="relative text-white w-[160px] font-light bg-[#AF88FF] btn btn-active mx-4">
                                 <span>Notifications Today</span>
                                 {items.daily_noti > 0 && (
                                     <div className='absolute top-0 right-0 translate-x-[40%] -translate-y-[40%] text-white rounded-full bg-red-500 w-6 h-6 flex items-center justify-center'>
                                         {items.daily_noti}
                                     </div>
                                 )}
-                            </button>
-                            <Link href={`${process.env.NEXT_PUBLIC_BASEROUTE}home/patient/new-patient`} className="relative text-white w-40 font-light bg-[#AF88FF] btn btn-active">
+                            </Link>
+                            <Link href={`${process.env.NEXT_PUBLIC_BASEROUTE}home/patient/new-patient`} className="relative text-white w-40 font-light bg-[#AF88FF] btn  ">
                                 <Image
                                     className='absolute left-4'
                                     src={`/image/icon_plus.png`}
@@ -144,9 +140,9 @@ const PatientBody = ({ items }: PatientProps) => {
                                 Add New</Link>
                         </div>
                     </div>
-                    <div className='pt-3 '>
+                    <div className='pt-3 flex-grow'>
                         <div className="overflow-x-auto ">
-                            <table className="table table-zebra">
+                            <table className="table ">
                                 <thead>
                                     <tr className='text-center bg-[#C0B4D9] text-base text-[#461F78]'>
                                         <th>วันที่ลงทะเบียน</th>
@@ -156,9 +152,9 @@ const PatientBody = ({ items }: PatientProps) => {
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody className='text-center text-base'>
+                                <tbody className='text-center text-base text-[#705396]'>
                                     {currentDisplayItems.map((item, index) => (
-                                        <tr key={index}>
+                                        <tr key={index} className={ `border-none ${(index + 1) % 2 === 0 ? 'bg-[#F4F4FE]' : ''}`}>
                                             <td>{formatDate(item.timestamp)}</td>
                                             <td>{item.appointment_date} | {item.appointment_time}</td>
                                             <td>{item.patient_name}</td>
@@ -179,7 +175,7 @@ const PatientBody = ({ items }: PatientProps) => {
                             </table>
                         </div>
                     </div>
-                    <div className='mt-4 flex justify-end'>
+                    <div className='mt-4 flex justify-end '>
                         <div className="join">
                             {paginationButtons()}
                         </div>

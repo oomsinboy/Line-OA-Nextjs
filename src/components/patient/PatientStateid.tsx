@@ -25,7 +25,7 @@ const PatientstateID = ({ items }: PatientStateOTP) => {
                             <div className="w-1/2 pr-4">
                                 <div className='my-2'>
                                     <span className='text-[#705396]'>ชื่อ</span>
-                                    <label className="input input-bordered flex items-center gap-2 w-full">
+                                    <label className="bg-[#F8F5FB] input input-bordered flex items-center gap-2 w-full">
                                         <input
                                             type="text"
                                             className="grow text-[#705396]"
@@ -38,7 +38,7 @@ const PatientstateID = ({ items }: PatientStateOTP) => {
                             <div className="w-1/2 pl-4">
                                 <div className='my-2'>
                                     <span className='text-[#705396]'>นามสกุล</span>
-                                    <label className="input input-bordered flex items-center gap-2 w-full">
+                                    <label className="bg-[#F8F5FB] input input-bordered flex items-center gap-2 w-full">
                                         <input
                                             type="text"
                                             className="grow text-[#705396]"
@@ -53,7 +53,7 @@ const PatientstateID = ({ items }: PatientStateOTP) => {
                             <div className="w-1/2 pr-4">
                                 <div className='my-2'>
                                     <span className='text-[#705396]'>เลขที่บัตรประจำตัวประชาชน</span>
-                                    <label className="input input-bordered flex items-center gap-2 w-full">
+                                    <label className="bg-[#F8F5FB] input input-bordered flex items-center gap-2 w-full">
                                         <input
                                             type="text"
                                             className="grow text-[#705396]"
@@ -68,7 +68,7 @@ const PatientstateID = ({ items }: PatientStateOTP) => {
                             <div className="w-1/2 pl-4">
                                 <div className='my-2'>
                                     <span className='text-[#705396]'>วันเดือนปีเกิด</span>
-                                    <label className="input input-bordered flex items-center gap-2 w-full">
+                                    <label className="bg-[#F8F5FB] input input-bordered flex items-center gap-2 w-full">
                                         <input
                                             type="date"
                                             className="grow text-[#705396]"
@@ -96,7 +96,7 @@ const PatientstateID = ({ items }: PatientStateOTP) => {
                             <div className="w-1/2 pl-4">
                                 <div className='my-2'>
                                     <span className='text-[#705396]'>วันนัดหมาย</span>
-                                    <label className="input input-bordered flex items-center gap-2 w-full">
+                                    <label className="bg-[#F8F5FB] input input-bordered flex items-center gap-2 w-full">
                                         <input
                                             type="datetime-local"
                                             className="grow text-[#705396]"

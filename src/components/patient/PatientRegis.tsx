@@ -106,13 +106,37 @@ const PatientRegis = ({ items }: PatientStateOTP) => {
     };
     const handleMedicationNameChange = (e: React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>, id: number) => {
         const value = e.target.value;
-        const selectedMedications = medications.map(medication => {
-            if (medication.id === id) {
-                return { ...medication, name: value, isOther: value === 'other' };
-            }
-            return medication;
-        });
-        setMedications(selectedMedications);
+        // const selectedMedications = medications.map(medication => {
+        //     if (medication.id === id) {
+        //         return { ...medication, name: value, isOther: value === 'other' };
+        //     }
+        //     return medication;
+        // });
+        // setMedications(selectedMedications);
+
+        const isDuplicate = medications.some(medication => medication.name === value && medication.id !== id && value !== 'other');
+
+        if (!isDuplicate) {
+            const selectedMedications = medications.map(medication => {
+                if (medication.id === id) {
+                    const isOther = value === 'other' || !medicalList.some(medical => medical.name === value);
+                    return { ...medication, name: value, isOther };
+                }
+                return medication;
+            });
+            setMedications(selectedMedications);
+        } else {
+            // alert('ชื่อยานี้ถูกเลือกแล้ว');
+            Swal.fire({
+                title: 'ขออภัย',
+                text: "รายการยานี้ถูกเลือกแล้ว",
+                icon: 'error',
+                confirmButtonText: 'ปิด',
+                customClass: {
+                    icon: 'custom-swal2-error',
+                }
+            });
+        }
     };
 
     const handleOtherMedicationChange = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
@@ -264,7 +288,7 @@ const PatientRegis = ({ items }: PatientStateOTP) => {
                                     <div className="w-1/2 pr-4">
                                         <div className='my-2'>
                                             <span className='text-[#705396]'>ชื่อ</span>
-                                            <label className="input input-bordered flex items-center gap-2 w-full">
+                                            <label className={`${!isEditing ? 'bg-[#F8F5FB]' : ''} input input-bordered flex items-center gap-2 w-full`}>
                                                 <input
                                                     type="text"
                                                     className="grow text-[#705396]"
@@ -279,7 +303,7 @@ const PatientRegis = ({ items }: PatientStateOTP) => {
                                     <div className="w-1/2 pl-4">
                                         <div className='my-2'>
                                             <span className='text-[#705396] '>นามสกุล</span>
-                                            <label className="input input-bordered flex items-center gap-2 w-full">
+                                            <label className={`${!isEditing ? 'bg-[#F8F5FB]' : ''} input input-bordered flex items-center gap-2 w-full`}>
                                                 <input
                                                     type="text"
                                                     className="grow text-[#705396]"
@@ -296,7 +320,7 @@ const PatientRegis = ({ items }: PatientStateOTP) => {
                                     <div className="w-1/2 pr-4">
                                         <div className='my-2'>
                                             <span className='text-[#705396]'>เลขที่บัตรประจำตัวประชาชน</span>
-                                            <label className="input input-bordered flex items-center gap-2 w-full">
+                                            <label className={`${!isEditing ? 'bg-[#F8F5FB]' : ''} input input-bordered flex items-center gap-2 w-full`}>
                                                 <input
                                                     type="text"
                                                     className="grow text-[#705396]"
@@ -313,7 +337,7 @@ const PatientRegis = ({ items }: PatientStateOTP) => {
                                     <div className="w-1/2 pl-4">
                                         <div className='my-2'>
                                             <span className='text-[#705396]'>วันเดือนปีเกิด</span>
-                                            <label className="input input-bordered flex items-center gap-2 w-full">
+                                            <label className={`${!isEditing ? 'bg-[#F8F5FB]' : ''} input input-bordered flex items-center gap-2 w-full`}>
                                                 <input
                                                     type="date"
                                                     className="grow text-[#705396]"
@@ -343,7 +367,7 @@ const PatientRegis = ({ items }: PatientStateOTP) => {
                                     <div className="w-1/2 pl-4">
                                         <div className='my-2'>
                                             <span className='text-[#705396]'>วันนัดหมาย</span>
-                                            <label className="input input-bordered flex items-center gap-2 w-full">
+                                            <label className={`${!isEditing ? 'bg-[#F8F5FB]' : ''} input input-bordered flex items-center gap-2 w-full`}>
                                                 <input
                                                     type="datetime-local"
                                                     className="grow text-[#705396]"
@@ -438,13 +462,15 @@ const PatientRegis = ({ items }: PatientStateOTP) => {
                                                 {isEditing ? (
                                                     // แสดงแบบฟอร์มเพิ่ม/แก้ไขรายการยา
                                                     <div>
-                                                        {medications.map((medication) => (
+                                                        {medications.map((medication) => {
+                                                            const isOther = !medicalList.some(medical => medical.name === medication.name);                                
+                                                           return (
                                                             <div key={medication.id} className='flex justify-between pt-2'>
-                                                                {medication.isOther ? (
+                                                                {medication.isOther || isOther ? (
                                                                     <input
                                                                         type='text'
                                                                         className='w-[70%] mx-1 h-[3rem] rounded bg-[#F8F5FB] text-center text-[#705396]'
-                                                                        value={otherMedications[medication.id] || ''}
+                                                                        value={otherMedications[medication.id] || medication.name ||'' }
                                                                         onChange={(e) => handleOtherMedicationChange(e, medication.id)}
                                                                         placeholder='ระบุชื่อยา'
                                                                     />
@@ -480,7 +506,7 @@ const PatientRegis = ({ items }: PatientStateOTP) => {
                                                                     />
                                                                 </button>
                                                             </div>
-                                                        ))}
+                                                        );})}
                                                     </div>
                                                 ) : (
                                                     // แสดงรายการยาที่เลือกเป็นค่าเริ่มต้น
@@ -590,7 +616,7 @@ const PatientRegis = ({ items }: PatientStateOTP) => {
                                 <div className="w-[63.016%] ">
                                     <div className='my-2'>
                                         <span className='text-[#705396] '>Line Username</span>
-                                        <label className="relative input input-bordered flex items-center gap-2 w-full">
+                                        <label className="bg-[#F8F5FB] relative input input-bordered flex items-center gap-2 w-full">
                                             <input
                                                 type="text"
                                                 className="grow text-[#705396]"

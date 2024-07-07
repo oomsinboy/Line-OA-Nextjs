@@ -186,12 +186,12 @@ const Calendar = ({ dailyDetail }: CalendarProps) => {
                                                         //     />
                                                         // </button>
                                                         <button
-                                                            className={`absolute bottom-2 left-2 rounded text-white w-7 h-7 font-light flex justify-center items-center ${isToday || !isPast ? 'bg-[#705396] hover:bg-[#BE77F1]' : 'bg-[#AEB2B5] hover:bg-[#e5e7eb]'}`}
+                                                            className={`absolute bottom-2 left-2 rounded text-white w-7 h-7 font-light flex justify-center items-center ${isFirst ? 'bg-[#AEB2B5] hover:bg-[#e5e7eb]' : isToday || !isPast ? 'bg-[#705396] hover:bg-[#BE77F1]' : 'bg-[#AEB2B5] hover:bg-[#e5e7eb]'}`}
                                                             onClick={() => handleButtonClick(detail)}
                                                         >
                                                             <Image
                                                                 className='gap-2'
-                                                                src={isToday || !isPast ? `/image/icon_edit.png` : `/image/icon_edit_pass.png`}
+                                                                src={isFirst ? `/image/icon_edit_pass.png` : isToday || !isPast ? `/image/icon_edit.png` : `/image/icon_edit_pass.png`}
                                                                 alt="logo"
                                                                 width={20}
                                                                 height={20}
@@ -212,24 +212,6 @@ const Calendar = ({ dailyDetail }: CalendarProps) => {
                     </div>
                 ))}
             </div>
-            {/* <ModalPatient isVisible={showModal} onClose={() => setShowModal(false)} title="เพิ่มบทความ">
-                <div>
-                    <div>
-
-                    </div>
-                    <div>
-                        <form className='space-y-6' action="">
-                            <div>
-                                <label className='block mb-2 font-medium text-gray-900'>
-                                    หัวข้อ
-                                </label>
-                                <input type="text" className='bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:right-blue-500 focus:border-blue-500 block w-full p-2.5' />
-                            </div>
-
-                        </form>
-                    </div>
-                </div>
-            </ModalPatient> */}
 
             <ModalPatient isVisible={showModal} onClose={() => setShowModal(false)} title="รายละเอียดการแจ้งเตือน">
                 {modalContent && (

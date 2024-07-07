@@ -21,6 +21,11 @@
       "static/chunks/main-app.js",
       "static/chunks/app/home/patient/page.js"
     ],
+    "/home/patient/new-patient/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/home/patient/new-patient/page.js"
+    ],
     "/home/patient/view-patient/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",

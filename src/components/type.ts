@@ -9,6 +9,19 @@ export interface PatientData {
   state: string;
 }
 
+export interface NotificationsPatient {
+  visit_id: number,
+  pt_name: string,
+  regis_date: string,
+  appointment_date: string
+  appointment_time: string,
+  state: string
+}
+
+export interface NotiPatientProps {
+  items: NotificationsPatient[];
+}
+
 export interface FixPatient {
   all_visit : PatientData[];
   daily_noti: number

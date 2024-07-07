@@ -17,8 +17,6 @@ function NewPatient() {
     const [birthDate, setBirthDate] = useState<string>('');
     const [currentDate, setCurrentDate] = useState<string>('');
     const [appointmentDate, setAppointmentDate] = useState<string>('');
-    // const [medications, setMedications] = useState([{ id: Date.now(), name: '', dose: '' }]);
-    // const [medications, setMedications] = useState<{ id: number; name: string; dose: string }[]>([]);
     const [medications, setMedications] = useState<{ id: number; name: string; dose: string; isOther: boolean }[]>([]);
 
     const [medicalList, setMedicalList] = useState<MedicalList[]>([]);
@@ -80,13 +78,37 @@ function NewPatient() {
 
     const handleMedicationNameChange = (e: React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>, id: number) => {
         const value = e.target.value;
-        const selectedMedications = medications.map(medication => {
-            if (medication.id === id) {
-                return { ...medication, name: value, isOther: value === 'other' };
-            }
-            return medication;
-        });
-        setMedications(selectedMedications);
+
+        const isDuplicate = medications.some(medication => medication.name === value && medication.id !== id && value !== 'other');
+
+        // const selectedMedications = medications.map(medication => {
+        //     if (medication.id === id) {
+        //         return { ...medication, name: value, isOther: value === 'other' };
+        //     }
+        //     return medication;
+        // });
+        // setMedications(selectedMedications);
+
+        if (!isDuplicate) {
+            const selectedMedications = medications.map(medication => {
+                if (medication.id === id) {
+                    return { ...medication, name: value, isOther: value === 'other' };
+                }
+                return medication;
+            });
+            setMedications(selectedMedications);
+        } else {
+            // alert('ชื่อยานี้ถูกเลือกแล้ว');
+            Swal.fire({
+                title: 'ขออภัย',
+                text: "รายการยานี้ถูกเลือกแล้ว",
+                icon: 'error',
+                confirmButtonText: 'ปิด',
+                customClass: {
+                    icon: 'custom-swal2-error',
+                }
+            });
+        }
     };
 
 
@@ -229,7 +251,7 @@ function NewPatient() {
                                 <div className="w-1/2 pr-4">
                                     <div className='my-2'>
                                         <span className='text-[#705396]'>ชื่อ</span>
-                                        <label className="input input-bordered flex items-center gap-2 w-full">
+                                        <label className=" input input-bordered flex items-center gap-2 w-full">
                                             <input
                                                 type="text"
                                                 className="grow text-[#705396]"
@@ -243,7 +265,7 @@ function NewPatient() {
                                 <div className="w-1/2 pl-4">
                                     <div className='my-2'>
                                         <span className='text-[#705396] '>นามสกุล</span>
-                                        <label className="input input-bordered flex items-center gap-2 w-full">
+                                        <label className=" input input-bordered flex items-center gap-2 w-full">
                                             <input
                                                 type="text"
                                                 className="grow text-[#705396]"
@@ -260,7 +282,7 @@ function NewPatient() {
                                 <div className="w-1/2 pr-4">
                                     <div className='my-2'>
                                         <span className='text-[#705396]'>เลขที่บัตรประจำตัวประชาชน</span>
-                                        <label className="input input-bordered flex items-center gap-2 w-full">
+                                        <label className=" input input-bordered flex items-center gap-2 w-full">
                                             <input
                                                 type="text"
                                                 className="grow text-[#705396]"
@@ -277,7 +299,7 @@ function NewPatient() {
                                 <div className="w-1/2 pl-4">
                                     <div className='my-2'>
                                         <span className='text-[#705396]'>วันเดือนปีเกิด</span>
-                                        <label className="input input-bordered flex items-center gap-2 w-full">
+                                        <label className=" input input-bordered flex items-center gap-2 w-full">
                                             <input
                                                 type="date"
                                                 className="grow text-[#705396]"
@@ -338,17 +360,6 @@ function NewPatient() {
                                     <div className='max-h-[45dvh] overflow-y-auto'>
                                         {medications.map((medication) => (
                                             <div key={medication.id} className='flex justify-between pt-2'>
-                                                {/* <select
-                                                    className='w-[70%] mx-1 h-[3rem] rounded bg-[#F8F5FB] text-center text-[#705396]'
-                                                    value={medication.name}
-                                                    onChange={(e) => handleMedicationNameChange(e, medication.id)}
-                                                >
-                                                    <option value='' disabled >เลือกยา</option>
-                                                    {medicalList.map(medical => (
-                                                        <option key={medical.id} value={medical.name}>{medical.name}</option>
-                                                    ))}
-                                                    <option value='other'>อื่นๆ</option>
-                                                </select> */}
                                                 {medication.isOther ? (
                                                     <input
                                                         type='text'
