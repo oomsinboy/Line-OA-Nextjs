@@ -7,10 +7,20 @@ import { useEffect, useState } from 'react';
 import { FixPatient } from '@/components/type';
 import PatientBody from '@/components/patient/PatientBody';
 import { PreloadWhite } from '@/components/patient/PreloadView';
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/navigation';
 
 function PatientPage() {
   const [dataPatient, setDataPatient] = useState<FixPatient | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const router = useRouter();
+
+  useEffect(() => {
+    const user = Cookies.get('__user');
+    if (!user) {
+      router.push('/');
+    }
+  }, [router]);
 
   useEffect(() => {
     const fetchVisit = async () => {

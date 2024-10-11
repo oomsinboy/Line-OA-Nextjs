@@ -7,10 +7,20 @@ import { useEffect, useState } from 'react';
 import { NotificationsPatient } from '@/components/type';
 import { PreloadWhite } from '@/components/patient/PreloadView';
 import Notificationtoday from '@/components/patient/Notificationtoday';
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/navigation';
 
 function NotiPatientPage() {
   const [dataPatient, setDataPatient] = useState<NotificationsPatient[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const router = useRouter();
+    
+  useEffect(() => {
+    const user = Cookies.get('__user');
+    if (!user) {
+      router.push('/');
+    }
+  }, [router]);
 
   useEffect(() => {
     const fetchVisit = async () => {

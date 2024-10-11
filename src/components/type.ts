@@ -79,6 +79,11 @@ export interface PatientStateOTP {
   items: CallViewID;
 }
 
+export interface PatientStateCall {
+  items: CallViewID;
+  fetchDataview: () => Promise<void>; 
+}
+
 // Information
 export interface InfoData {
   id: number;
@@ -86,6 +91,15 @@ export interface InfoData {
   detail: string;
   lastupdate: string;
 }
+
+export interface InfoDataX {
+  id: number;
+  header: string;
+  detail: string;
+  lastupdate: string;
+  images: string[]
+}
+
 
 export interface NotiData {
   id: number;
@@ -100,11 +114,15 @@ export interface NotiBodyProps {
 
 export interface InfoBodyProps {
   items: InfoData[];
+  onFetchInfo: () => void;
 }
 
 export type ItemCardProps = {
   item: InfoData;
-  onDelete: (id: number) => void;
+  // onDelete: (id: number) => void;
+  onDelete: (e: React.MouseEvent<HTMLButtonElement>, id: number) => void;
+  onView: (id: number) => void;
+  title: string;
 };
 
 //  Modal

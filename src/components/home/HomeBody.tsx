@@ -8,11 +8,11 @@ const HomeBody = () => {
             <div className='h-full w-full rounded-[15px] bg-white px-14 py-10'>
                 <div className='min-h-[78dvh] flex justify-center'>
                     <div>
-                        <div className='select-none my-8 mb-12 flex items-center justify-center text-[#461F78] text-4xl font-bold'>
+                        <div className='select-none mb-8 2xl:my-8 2xl:mb-12 flex items-center justify-center text-[#461F78] text-4xl font-bold'>
                             Menu
                         </div>
-                        <div className='flex h-[60dvh]'>
-                            <Link href={`${process.env.NEXT_PUBLIC_BASEROUTE}home/patient`} className="hover:bg-[#C5ABFB] cursor-pointer rounded-lg w-80 bg-base-100  border-4 border-[#AF88FF] mx-4">
+                        <div className='flex h-[60dvh] gap-4 2xl:gap-8'>
+                            <Link href={`${process.env.NEXT_PUBLIC_BASEROUTE}home/patient`} className="hover:bg-[#C5ABFB] cursor-pointer rounded-lg w-80 bg-base-100  border-4 border-[#AF88FF] ">
                                 <div className="card-body flex items-center justify-center">
                                     <div className='my-14'>
                                         <Image
@@ -25,7 +25,7 @@ const HomeBody = () => {
                                     <span className='text-4xl font-semibold text-[#461F78]'>Patient</span>
                                 </div>
                             </Link>
-                            <Link href={`${process.env.NEXT_PUBLIC_BASEROUTE}home/notification`} className="hover:bg-[#C5ABFB] cursor-pointer rounded-lg w-80 bg-base-100 border-4 border-[#AF88FF] mx-4">
+                            <Link href={`${process.env.NEXT_PUBLIC_BASEROUTE}home/notification`} className="hover:bg-[#C5ABFB] cursor-pointer rounded-lg w-80 bg-base-100 border-4 border-[#AF88FF] ">
                                 <div className="card-body flex items-center justify-center">
                                     <div className='my-14'>
                                         <Image
@@ -38,7 +38,7 @@ const HomeBody = () => {
                                     <span className='text-4xl font-semibold text-[#461F78] text-center'>Notifications Message</span>
                                 </div>
                             </Link>
-                            <Link href={`${process.env.NEXT_PUBLIC_BASEROUTE}home/informations`} className="hover:bg-[#C5ABFB] cursor-pointer rounded-lg w-80 bg-base-100 border-4 border-[#AF88FF] mx-4">
+                            <Link href={`${process.env.NEXT_PUBLIC_BASEROUTE}home/informations`} className="hover:bg-[#C5ABFB] cursor-pointer rounded-lg w-80 bg-base-100 border-4 border-[#AF88FF] ">
                                 <div className="card-body flex items-center justify-center">
                                     <div className='my-14'>
                                         <Image

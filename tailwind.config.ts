@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      screens: {
+        '2xl': '1366px', // ตั้งค่าขนาดหน้าจอ 2xl ให้เป็น 1366px
+      },
       // backgroundImage: {
       //   "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
       //   "gradient-conic":

@@ -11,7 +11,6 @@ const ModalPatient = ({ isVisible, onClose, title, children }: ModalProps) => {
             <div className='w-[80%] animate-modalOpen'>
                 <div className='relative bg-white p-3 rounded'>
                     <div className='absolute right-2'>
-                        {/* <span className='text-2xl text-[#5955B3] font-semibold	'>{title}</span> */}
                         <button onClick={() => onClose()}>
                             <Image
                                 src={`/image/icon_close.png`}

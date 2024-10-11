@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation'
+import Cookies from 'js-cookie';
 import axios from 'axios';
 
 const LoginComponent = () => {
@@ -26,16 +27,22 @@ const LoginComponent = () => {
             return;
         }
 
+        if (username !== 'colonoscopytuh' || password !== 'colonoscopytuh') {
+            setError({ password: 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง' });
+            return;
+        }
+
         try {
             const formData = new FormData();
             formData.append('username', username);
             formData.append('password', password);
 
-            const response = await axios.post('https://city.planetcloud.cloud/citybackend/lineoa/login/', formData);
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_CALLAPI}login/`, formData);
 
-            console.log(response);
+            // console.log(response);
 
             if (response.status === 200) {
+                Cookies.set('__user', username, { expires: 30 });
                 router.push(`${process.env.NEXT_PUBLIC_BASEROUTE}home`);
             } else {
                 setError({ password: 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง' });
